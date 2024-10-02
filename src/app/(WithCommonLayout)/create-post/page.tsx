@@ -4,9 +4,11 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Wrapper from "@/components/shared/Wrapper";
 import axios from "axios";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Select, { StylesConfig } from "react-select";
 import makeAnimated from "react-select/animated";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 const animatedComponents = makeAnimated();
 
 const modules = {
@@ -20,7 +22,6 @@ const modules = {
       { indent: "-1" },
       { indent: "+1" },
     ],
-    ["link", "image"],
   ],
 };
 
@@ -61,11 +62,12 @@ const categoryOptions = [
 ];
 
 const CreatePost = () => {
+  const quillRef = useRef(null);
   const [selectedCategories, setSelectedCategories] = useState("");
   const [title, setTitle] = useState("");
   const [value, setValue] = useState("");
   const [titleImg, setTitleImg] = useState(null);
-  const [category, setCategory] = useState(null);
+
   const [fileName, setFileName] = useState("");
 
   const handleSelectChange = (selectedOptions: {
@@ -94,6 +96,15 @@ const CreatePost = () => {
   };
 
   const handleSubmit = () => {
+    if (
+      !title.trim() ||
+      !titleImg.trim() ||
+      !value.trim() ||
+      !selectedCategories.trim()
+    ) {
+      toast.error("All input fields are required", { duration: 1400 });
+    }
+
     const blogData = {
       title,
       titleImg,
@@ -109,7 +120,7 @@ const CreatePost = () => {
     <div className="cratePostContainer py-3 bg-black50   ">
       <Wrapper className="createPostWrapper  flex justify-center items-center  ">
         {/* add post form  */}
-        <div className="    w-[95%] xsm:w-[85%] sm:w-[78%] md:w-[70%] xmd:w-[65%] lg:w-[55%] m-auto p-3 xsm:p-5 sm:p-7 md:p-10  rounded-md shadow-xl bg-prime100/20  backdrop-blur  ">
+        <div className="    w-[95%] xsm:w-[90%] m-auto p-3 xsm:p-5 sm:p-7 md:p-10  rounded-md shadow-xl bg-prime100/20  backdrop-blur  ">
           <p className=" mb-3 xsm:mb-5 sm:mb-8 text-xl xsm:text-2xl sm:text-3xl text-center font-semibold CormorantFont text-white  ">
             Create post
           </p>
@@ -167,6 +178,7 @@ const CreatePost = () => {
           {/* text editor  */}
           <div className="textEditor   h-[22rem] ">
             <ReactQuill
+              ref={quillRef}
               theme="snow"
               value={value}
               onChange={setValue}
@@ -178,12 +190,12 @@ const CreatePost = () => {
 
           {/* submit button  */}
           <div className="submit   text-center  mt-16 ">
-            <button
+            <Button
               onClick={() => handleSubmit()}
-              className=" cursor-pointer text-gray-50 bg-violet-700 hover:bg-violet-800 active:scale-95 hover:scale-105 hover:shadow-md py-2 px-5 rounded font-medium headingFont  "
+              className="  text-gray-50 bg-prime50 hover:bg-prime100 active:scale-95 hover:scale-105 hover:shadow-md py-2 px-5 rounded font-medium   "
             >
               Submit
-            </button>
+            </Button>
           </div>
           {/* submit button ends */}
 

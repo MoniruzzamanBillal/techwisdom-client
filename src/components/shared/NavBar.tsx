@@ -12,9 +12,6 @@ import { Button } from "../ui/button";
 const Links = [
   { name: "Home", link: "/" },
   { name: "Create Post", link: "/create-post" },
-  { name: "Booking", link: "/booking-car-list" },
-  { name: "About us", link: "/about-us" },
-  { name: "Contact", link: "/contact-us" },
 ];
 
 const Navbar = () => {
