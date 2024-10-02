@@ -10,6 +10,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        prime50: "#02B8A6",
+        prime100: "#009B94",
         black100: "#020817",
         black50: "#070F2B",
         black20: "#040B24",
