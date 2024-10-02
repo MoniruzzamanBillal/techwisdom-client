@@ -11,7 +11,7 @@ import { Button } from "../ui/button";
 
 const Links = [
   { name: "Home", link: "/" },
-  { name: "Car Lists", link: "/car-list" },
+  { name: "Create Post", link: "/create-post" },
   { name: "Booking", link: "/booking-car-list" },
   { name: "About us", link: "/about-us" },
   { name: "Contact", link: "/contact-us" },
@@ -48,15 +48,15 @@ const Navbar = () => {
         {/* Menu icon */}
         <div
           onClick={() => setOpen(!open)}
-          className="   flex justify-center items-center   cursor-pointer md:hidden  font-semibold  text-2xl "
+          className="   flex justify-center items-center   cursor-pointer md:hidden  font-semibold  text-2xl text-prime50 "
         >
-          {open ? <RiCloseFill className="  " /> : <RiMenu3Fill />}
+          {open ? <RiCloseFill className="   " /> : <RiMenu3Fill />}
         </div>
 
         {/* linke items */}
         <ul
-          className={` absolute bg-white shadow-md md:shadow-none z-[-1] left-0 w-full pl-10 md:flex md:items-center  pb-8 md:pb-0   md:static md:bg-transparent  md:z-auto   md:w-auto md:pl-0  transition-all duration-300 ease-in text-xs xsm:text-sm sm:text-base md:text-xs xmd:text-sm lg:text-base  ${
-            open ? "top-[3.2rem] block" : "top-[-490px]"
+          className={` absolute bg-black20 shadow-md md:shadow-none z-[-1] left-0 w-full pl-10 md:flex md:items-center  pb-8 md:pb-0   md:static md:bg-transparent  md:z-auto   md:w-auto md:pl-0  transition-all duration-300 ease-in text-xs xsm:text-sm sm:text-base md:text-xs xmd:text-sm lg:text-base  ${
+            open ? "top-[3.9rem] block" : "top-[-490px]"
           }  `}
           style={{
             backdropFilter: "blur(8px)",
@@ -97,7 +97,10 @@ const Navbar = () => {
               )} */}
 
             <Link href={"/login"}>
-              <Button className=" -z-[1] text-xs sm:text-sm md:text-base bg-prime50 hover:bg-prime100 ">
+              <Button
+                onClick={() => setOpen(false)}
+                className=" -z-[1] text-xs sm:text-sm md:text-base bg-prime50 hover:bg-prime100 "
+              >
                 Sign in
               </Button>
             </Link>
