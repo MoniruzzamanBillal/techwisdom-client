@@ -1,1 +1,1 @@
-// export { default as FeaturedCar } from "./FeaturedCar";
+export { default as BlogCard } from "./BlogCard";
