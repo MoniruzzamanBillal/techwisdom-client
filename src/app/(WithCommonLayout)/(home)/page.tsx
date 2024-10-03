@@ -1,6 +1,7 @@
 import Wrapper from "@/components/shared/Wrapper";
 import { BlogCard } from "@/components/ui";
 import { CategoryFilter, SortFilter } from "@/components/ui/Module";
+import { useUserContext } from "@/context/user.provider";
 
 const options = [
   {
