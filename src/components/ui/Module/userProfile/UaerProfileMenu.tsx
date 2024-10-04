@@ -10,8 +10,8 @@ const userProfileLinks: TUserProfile[] = [
     link: "/profile",
   },
   {
-    label: "Following",
-    link: "/profile",
+    label: "My Following",
+    link: "/profile/my-following",
   },
   {
     label: "View Analytics",

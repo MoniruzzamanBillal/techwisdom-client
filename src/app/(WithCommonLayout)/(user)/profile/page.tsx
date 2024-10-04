@@ -49,7 +49,7 @@ const UserProfile = () => {
             <BlogCard />
             <BlogCard />
             <BlogCard />
-           
+
             {/*  */}
           </div>
           {/* right section ends  */}
