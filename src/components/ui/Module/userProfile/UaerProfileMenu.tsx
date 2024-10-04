@@ -19,8 +19,8 @@ const userProfileLinks: TUserProfile[] = [
   },
 
   {
-    label: "Payment",
-    link: "/profile",
+    label: "My subscriptin",
+    link: "/profile/user-subscription",
   },
 ];
 
