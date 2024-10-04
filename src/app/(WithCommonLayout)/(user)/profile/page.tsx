@@ -1,6 +1,8 @@
 import Wrapper from "@/components/shared/Wrapper";
 import { BlogCard } from "@/components/ui";
+import { Button } from "@/components/ui/button";
 import { CategoryFilter, SortFilter } from "@/components/ui/Module";
+import Link from "next/link";
 
 const options = [
   {
@@ -14,17 +16,23 @@ const options = [
   { name: "Minivan", value: "Minivan" },
 ];
 
-const Home = () => {
+const UserProfile = () => {
   return (
-    <div className="HomePageContainer pt-4 bg-black50 min-h-screen ">
-      <Wrapper className="homePageWrapper  ">
-        {/* search sort section starts  */}
+    <div className="userPostsContainer pt-4 ">
+      <Wrapper className=" userPostsWrapper  ">
+        {/* add post button  */}
+        <div className="addPostBtn my-6  ">
+          <Link href={"/create-post"}>
+            <Button className=" px-3 xsm:px-4 sm:px-5 md:px-6 font-semibold text-xs sm:text-sm md:text-base bg-prime50 hover:bg-prime100 active:scale-95 duration-500 ">
+              Add new post
+            </Button>
+          </Link>
+        </div>
+        {/* add post button ends  */}
 
         <div className="searchFilterSection mb-4 ">
           <SortFilter />
         </div>
-
-        {/* search sort section ends  */}
 
         {/* main body part starts  */}
         <div className="mainBody   flex flex-col xl:flex-row justify-between  gap-x-6 gap-y-8 ">
@@ -41,17 +49,15 @@ const Home = () => {
             <BlogCard />
             <BlogCard />
             <BlogCard />
-            <BlogCard />
+           
             {/*  */}
           </div>
           {/* right section ends  */}
         </div>
         {/* main body part ends  */}
-
-        {/*  */}
       </Wrapper>
     </div>
   );
 };
 
-export default Home;
+export default UserProfile;

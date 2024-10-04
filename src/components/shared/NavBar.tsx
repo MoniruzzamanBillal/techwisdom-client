@@ -5,9 +5,22 @@ import Wrapper from "./Wrapper";
 
 import { RiMenu3Fill, RiCloseFill } from "react-icons/ri";
 
-import { LuUser2 } from "react-icons/lu";
 import { useState } from "react";
 import { Button } from "../ui/button";
+import { useUserContext } from "@/context/user.provider";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
 const Links = [
   { name: "Home", link: "/" },
@@ -16,6 +29,18 @@ const Links = [
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+
+  const { user, handleSetUser, handleSetToken } = useUserContext();
+
+  console.log(user);
+
+  // ! logout function
+  const handleLogout = () => {
+    handleSetUser(null);
+    handleSetToken(null);
+    router.push("/");
+  };
 
   return (
     <div
@@ -76,35 +101,53 @@ const Navbar = () => {
             ))}
 
           <div className="buttonSection  md:ml-5 lg:ml-8  flex  items-center gap-x-0.5  ">
-            {/* {!userInfo ? (
-                <Link href={"/login"}>
-                  <Button className=" -z-[1] text-xs sm:text-sm md:text-base bg-prime50 hover:bg-prime100 ">
-                    Sign in
-                  </Button>
-                </Link>
-              ) : (
-                <div className="relative">
-                  <Link
-                    to="/dashboard"
-                    className="inline-block p-2 rounded-full bg-orange-100 cursor-pointe"
-                  >
-                    <LuUser2 className=" text-2xl font-bold text-gray-800 " />
-                  </Link>
-                </div>
-              )} */}
+            {!user ? (
+              <Link href={"/login"}>
+                <Button className=" -z-[1] text-xs sm:text-sm md:text-base bg-prime50 hover:bg-prime100 ">
+                  Sign in
+                </Button>
+              </Link>
+            ) : (
+              <div className="relative  ">
+                {/*  */}
+                {/*  */}
+                {/*  */}
+                {/*  */}
 
-            <Link href={"/login"}>
-              <Button
-                onClick={() => setOpen(false)}
-                className=" -z-[1] text-xs sm:text-sm md:text-base bg-prime50 hover:bg-prime100 "
-              >
-                Sign in
-              </Button>
-            </Link>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Avatar className="cursor-pointer">
+                      <AvatarImage src={user?.profilePicture} alt="@shadcn" />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56">
+                    <DropdownMenuLabel>Dashboard</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuGroup>
+                      <Link href={"/profile"}>
+                        <DropdownMenuItem>
+                          <span>Dashboard</span>
+                          <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                      </Link>
+                    </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuGroup>
+                      <DropdownMenuItem onClick={() => handleLogout()}>
+                        <span>Log out </span>
+                        <DropdownMenuShortcut>⌘L</DropdownMenuShortcut>
+                      </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                  </DropdownMenuContent>
+                </DropdownMenu>
 
-            {/*  */}
-            {/*  */}
-            {/*  */}
+                {/*  */}
+                {/*  */}
+                {/*  */}
+              </div>
+            )}
 
             {/*  */}
             {/*  */}

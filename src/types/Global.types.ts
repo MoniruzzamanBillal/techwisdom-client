@@ -19,3 +19,8 @@ export type TUserToken = {
   iat?: number;
   exp?: number;
 };
+
+export type TUserProfile = {
+  label: string;
+  link: string;
+};
