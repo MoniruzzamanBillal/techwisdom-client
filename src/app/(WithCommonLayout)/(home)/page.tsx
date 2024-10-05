@@ -1,20 +1,14 @@
+"use client";
 import Wrapper from "@/components/shared/Wrapper";
 import { BlogCard } from "@/components/ui";
 import { CategoryFilter, SortFilter } from "@/components/ui/Module";
-
-const options = [
-  {
-    name: "All",
-    value: "",
-  },
-  { name: "Sedan", value: "Sedan" },
-  { name: "SUV", value: "SUV" },
-  { name: "Coupe", value: "Coupe" },
-  { name: "Compact", value: "Compact" },
-  { name: "Minivan", value: "Minivan" },
-];
+import { useState } from "react";
 
 const Home = () => {
+  const [type, setType] = useState("");
+
+  // console.log("in home page , type = ", type);
+
   return (
     <div className="HomePageContainer pt-4 bg-black50 min-h-screen ">
       <Wrapper className="homePageWrapper  ">
@@ -30,7 +24,7 @@ const Home = () => {
         <div className="mainBody   flex flex-col xl:flex-row justify-between  gap-x-6 gap-y-8 ">
           {/* left side filter section starts  */}
           <div className="filterSection w-[100%] xl:w-[16%]  ">
-            <CategoryFilter options={options} />
+            <CategoryFilter type={type} setType={setType} />
           </div>
           {/* left side filter section ends  */}
 

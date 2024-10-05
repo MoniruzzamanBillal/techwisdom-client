@@ -1,17 +1,30 @@
+"use client";
 import Image from "next/image";
 import { Button } from "../../button";
 import { Edit } from "lucide-react";
+import { useUserContext } from "@/context/user.provider";
 
 const ProfileImgSection = () => {
+  const { user } = useUserContext();
+
+
+
+  
+
   return (
     <div className="ProfileImgSectionContainer   rounded-md ">
-      <div className="profileImgWrapper flex justify-between items-center ">
+      <div className="profileImgWrapper flex flex-col xsm:flex-row justify-between items-center gap-y-8 ">
         {/* left section starts  */}
-        <div className="profileLeftSection  flex items-center gap-x-5 ">
+        <div className="profileLeftSection  flex  items-center gap-x-5 ">
           {/* left image section starts  */}
-          <div className="imgSection rounded-full overflow-auto w-[14rem] ">
+          <div className="imgSection rounded-full overflow-auto w-[8rem] sm:w-[10rem] md:w-[12rem] xmd:w-[14rem] ">
             <Image
-              src={"https://i.postimg.cc/TPMTptwT/ubaida.jpg"}
+              // src={`https://i.postimg.cc/TPMTptwT/ubaida.jpg  `}
+              src={` ${
+                user?.profilePicture
+                  ? user?.profilePicture
+                  : "https://i.postimg.cc/TPMTptwT/ubaida.jpg"
+              }  `}
               alt="progileImage"
               height={700}
               width={700}
@@ -21,7 +34,9 @@ const ProfileImgSection = () => {
 
           {/* left name section starts  */}
           <div className="nameSection   ">
-            <p className=" text-2xl font-semibold text-gray-50 "> User name </p>
+            <p className=" text-xl sm:text-2xl font-semibold text-gray-50 mb-2 ">
+           {user?.name}
+            </p>
             <p className=" font-medium text-gray-300  "> 10 Followers </p>
           </div>
           {/* left name section ends  */}

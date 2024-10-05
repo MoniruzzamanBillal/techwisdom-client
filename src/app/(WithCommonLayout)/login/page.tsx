@@ -11,7 +11,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import { useUserContext } from "@/context/user.provider";
 import { FormSubmitLoading } from "@/components/ui";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 
 const Login = () => {
   const searchParams = useSearchParams();
@@ -28,8 +28,8 @@ const Login = () => {
     try {
       const response = await handleUserLogin(data);
 
-      console.log(response?.data);
-      console.log(response?.token);
+      // console.log(response?.data);
+      // console.log(response?.token);
 
       handleSetUser(response?.data);
       handleSetToken(response?.token);
@@ -51,7 +51,7 @@ const Login = () => {
         router.push("/");
       }
     }
-  }, [isPending, isSuccess]);
+  }, [isPending, isSuccess, redirect, router]);
 
   return (
     <div className="loginContainer min-h-screen flex items-center justify-center bg-black50 ">
@@ -117,4 +117,10 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Login />
+    </Suspense>
+  );
+}

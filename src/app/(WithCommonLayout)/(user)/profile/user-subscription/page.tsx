@@ -1,7 +1,7 @@
 "use client";
 
 import Wrapper from "@/components/shared/Wrapper";
-import { SubscriptionCard, SubscriptionDetail } from "@/components/ui/Module";
+import { SubscriptionDetail } from "@/components/ui/Module";
 
 const UserScribtion = () => {
   return (

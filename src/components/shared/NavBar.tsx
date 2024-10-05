@@ -15,12 +15,12 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const Links = [
   { name: "Home", link: "/" },
@@ -44,7 +44,7 @@ const Navbar = () => {
 
   return (
     <div
-      className="  shadow-md w-full fixed top-0 left-0 z-10 "
+      className="  shadow-md w-full fixed top-0 left-0 z-10  "
       style={{
         backdropFilter: "blur(8px)",
       }}
@@ -54,10 +54,12 @@ const Navbar = () => {
         <div className="imgContainer  ">
           <Link href={"/"}>
             <div className=" text-2xl cursor-pointer flex items-center  gap-x-1">
-              <img
+              <Image
                 src={"https://i.postimg.cc/Qt3gytGP/logo.png"}
                 className="  w-[3rem] sm:w-[3.6rem] md:w-[2.8rem] lg:w-[4rem]  "
                 alt="logo"
+                height={700}
+                width={700}
               />
 
               <p className="  text-2xl sm:text-2xl md:text-xl lg:text-3xl font-bold font-headingFont text-prime50 ">
@@ -77,7 +79,7 @@ const Navbar = () => {
 
         {/* linke items */}
         <ul
-          className={` absolute bg-black20 shadow-md md:shadow-none z-[-1] left-0 w-full pl-10 md:flex md:items-center  pb-8 md:pb-0   md:static md:bg-transparent  md:z-auto   md:w-auto md:pl-0  transition-all duration-300 ease-in text-xs xsm:text-sm sm:text-base md:text-xs xmd:text-sm lg:text-base  ${
+          className={` absolute bg-black20 shadow-md md:shadow-none z-[-1] left-0 w-full pl-10 md:flex md:items-center  pb-8 md:pb-0   md:static md:bg-transparent  md:z-auto   md:w-auto md:pl-0  transition-all duration-300 ease-in text-sm sm:text-base md:text-xs xmd:text-sm lg:text-base  ${
             open ? "top-[3.9rem] block" : "top-[-490px]"
           }  `}
           style={{
@@ -121,11 +123,13 @@ const Navbar = () => {
                       <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56">
-                    <DropdownMenuLabel>Dashboard</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
+                  <DropdownMenuContent className="w-56 bg-black50 text-white ">
                     <DropdownMenuGroup>
-                      <Link href={"/profile"}>
+                      <Link
+                        href={` ${
+                          user?.userRole === "user" ? "/profile" : "/admin"
+                        } `}
+                      >
                         <DropdownMenuItem>
                           <span>Dashboard</span>
                           <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
@@ -139,7 +143,6 @@ const Navbar = () => {
                         <DropdownMenuShortcut>⌘L</DropdownMenuShortcut>
                       </DropdownMenuItem>
                     </DropdownMenuGroup>
-                    <DropdownMenuSeparator />
                   </DropdownMenuContent>
                 </DropdownMenu>
 

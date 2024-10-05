@@ -10,9 +10,14 @@ const userProfileLinks: TUserProfile[] = [
     link: "/profile",
   },
   {
+    label: "My Follower",
+    link: "/profile/my-follower",
+  },
+  {
     label: "My Following",
     link: "/profile/my-following",
   },
+
   {
     label: "View Analytics",
     link: "/profile",
@@ -24,7 +29,7 @@ const userProfileLinks: TUserProfile[] = [
   },
 ];
 
-const UaerProfileMenu = () => {
+const UserProfileMenu = () => {
   return (
     <div className="UaerProfileMenuContainer pt-3 ">
       <Wrapper className=" userProfileWrapper   p-6 bg-black100 ">
@@ -36,9 +41,9 @@ const UaerProfileMenu = () => {
             userProfileLinks?.map((item, ind) => (
               <div
                 key={ind}
-                className="userProfileLinks flex  items-center space-x-4 "
+                className="userProfileLinks flex  items-center space-x-2 xsm:space-x-4 text-xs xsm:text-sm sm:text-base "
               >
-                <Link href={`${item?.link}`} className=" pl-4 ">
+                <Link href={`${item?.link}`} className=" pl-2 xsm:pl-4 ">
                   {item?.label}
                 </Link>
                 <Separator
@@ -55,4 +60,4 @@ const UaerProfileMenu = () => {
   );
 };
 
-export default UaerProfileMenu;
+export default UserProfileMenu;

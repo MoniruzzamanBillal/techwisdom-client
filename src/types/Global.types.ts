@@ -24,3 +24,12 @@ export type TUserProfile = {
   label: string;
   link: string;
 };
+
+export type TResponseCategory = {
+  _id: string;
+  cName: string;
+  createdAt?: string;
+  updatedAt?: string;
+  isDeleted?: boolean;
+  __v?: number;
+};

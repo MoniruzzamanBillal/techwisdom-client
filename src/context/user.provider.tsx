@@ -1,3 +1,4 @@
+"use client";
 import { IUser } from "@/types/Global.types";
 import {
   createContext,
