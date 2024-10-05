@@ -66,7 +66,7 @@ const PostDetailCard = ({ postData }: IProps) => {
           <div className="editContainer mt-7  ">
             {postData?.authorId?._id === user?._id ? (
               <Link
-                href={`/post/${1212}`}
+                href={`/update-post/${postData?._id}`}
                 className=" bg-red-500 text-gray-50 hover:bg-red-600 hover:text-gray-100 hover:scale-105 active:scale-100 hover:shadow-lg py-2 px-5 rounded transition-all duration-200 font-medium  navLinkFont "
               >
                 Edit post

@@ -15,7 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { useUserContext } from "@/context/user.provider";
-import { useCreatePost } from "@/hooks/post.hook";
+import { useCreatePost, useGetSinglePost } from "@/hooks/post.hook";
 import { FormSubmitLoading } from "@/components/ui";
 import { useRouter } from "next/navigation";
 
@@ -67,11 +67,23 @@ const customStyles: StylesConfig = {
   }),
 };
 
-const CreatePost = () => {
+type IProps = {
+  params: {
+    postId: string;
+  };
+};
+
+const UpdatePost = ({ params: { postId } }: IProps) => {
   const router = useRouter();
-  const { user, token } = useUserContext();
   const { data: allCategory, isPending: categoryDataLoading } =
     useGetCategories();
+  const {
+    data: postDetail,
+    isLoading: postDataLoading,
+    isPending: postDataPending,
+  } = useGetSinglePost(postId);
+
+  const { user, token } = useUserContext();
   const [categoryData, setCategoryData] = useState([]);
 
   const [selectedCategories, setSelectedCategories] = useState("");
@@ -79,13 +91,9 @@ const CreatePost = () => {
   const [value, setValue] = useState("");
   const [titleImg, setTitleImg] = useState<File | null>(null);
   const [premiumContent, setPremiumContent] = useState("false");
-
-  const { mutateAsync: createPost, isPending: postCreatiionPending } =
-    useCreatePost();
-
   const [fileName, setFileName] = useState("");
 
-  // console.log(allCategory?.data);
+  //   console.log(postDetail?.data);
 
   // ! for setting up category option
   useEffect(() => {
@@ -98,6 +106,16 @@ const CreatePost = () => {
       setCategoryData(result);
     }
   }, [allCategory, categoryDataLoading]);
+
+  //   ! for setting the defaul value in state
+  useEffect(() => {
+    if (postDetail?.data) {
+      setTitle(postDetail.data.title || "");
+      setValue(postDetail.data.content || "");
+      setSelectedCategories(postDetail.data.category?._id || "");
+      setPremiumContent(postDetail.data.isPremium ? "true" : "false");
+}
+  }, [postDetail]);
 
   const handleSelectChange = (
     newValue: any,
@@ -125,15 +143,15 @@ const CreatePost = () => {
     }
   };
 
-  // ! for creation of a post
-  const handleSubmit = async () => {
-    if (
-      !title.trim() ||
-      !value.trim() ||
-      !selectedCategories.trim() ||
-      !titleImg
-    ) {
-      toast.error("All input fields are required", { duration: 1400 });
+  //   ! for updating post data
+  const handleUpdatePost = async () => {
+    if (!title.trim() || !value.trim() || !selectedCategories.trim()) {
+      toast.error("All input fields are required", { duration: 1200 });
+      return;
+    }
+
+    if (!titleImg) {
+      toast.error("Select an image  ", { duration: 1200 });
       return;
     }
 
@@ -147,34 +165,28 @@ const CreatePost = () => {
       authorId: user?._id,
     };
 
-    const formdata = new FormData();
-
-    formdata.append("data", JSON.stringify(blogData));
-    formdata.append("file", titleImg);
-
-    const reqToken = `Bearer ${token}`;
-
-    try {
-      const result = await createPost({ formdata, token: reqToken });
-
-      console.log(result);
-
-      if (result?.success) {
-        setTimeout(() => {
-          router.push("/");
-        }, 300);
-      }
-    } catch (error) {
-      toast.error("Somethng went wrong while creating post ", {
-        duration: 1400,
-      });
-      console.log(error);
-    }
+    console.log(blogData);
+    console.log(titleImg);
   };
 
   let content = null;
 
   // * if category data is loading
+  if (categoryDataLoading || postDataLoading || postDataPending) {
+    content = (
+      <>
+        <div className="loadingContainer flex flex-col gap-y-3 ">
+          <Skeleton className=" h-[3rem] w-full " />
+          <Skeleton className=" h-[3rem] w-full " />
+          <Skeleton className=" h-[3rem] w-full " />
+          <Skeleton className=" h-[10rem] w-full " />
+          <Skeleton className=" h-[2rem] w-[5rem] " />
+        </div>
+      </>
+    );
+  }
+
+  // * if category data is not  loading
   if (categoryDataLoading) {
     content = (
       <>
@@ -187,11 +199,7 @@ const CreatePost = () => {
         </div>
       </>
     );
-  } 
-  
-  
-  
-  else if (!categoryDataLoading && categoryData?.length) {
+  } else if (!categoryDataLoading && categoryData?.length) {
     content = (
       <>
         <div className="createPostForm">
@@ -241,6 +249,9 @@ const CreatePost = () => {
               className="   text-xl   "
               classNamePrefix="custom   "
               styles={customStyles}
+              value={categoryData.find(
+                (option: any) => option?.value === selectedCategories
+              )}
               onChange={handleSelectChange}
               placeholder="Choose a category"
             />
@@ -283,7 +294,6 @@ const CreatePost = () => {
           {/* text editor  */}
           <div className="textEditor   h-[22rem] ">
             <ReactQuill
-              // ref={quillRef}
               theme="snow"
               value={value}
               onChange={setValue}
@@ -296,10 +306,10 @@ const CreatePost = () => {
           {/* submit button  */}
           <div className="submit   text-center  mt-16 ">
             <Button
-              onClick={() => handleSubmit()}
+              onClick={() => handleUpdatePost()}
               className="  text-gray-50 bg-prime50 hover:bg-prime100 active:scale-95 hover:scale-105 hover:shadow-md py-2 px-5 rounded font-medium   "
             >
-              Submit
+              Update
             </Button>
           </div>
           {/* submit button ends */}
@@ -308,14 +318,16 @@ const CreatePost = () => {
     );
   }
 
+  //   console.log(postId);
+
   return (
     <div className="cratePostContainer py-3 bg-black50   ">
-      {postCreatiionPending && <FormSubmitLoading />}
+      {/* {postCreatiionPending && <FormSubmitLoading />} */}
       <Wrapper className="createPostWrapper  flex justify-center items-center  ">
         {/* add post form  */}
         <div className="    w-[95%] xsm:w-[90%] m-auto p-3 xsm:p-5 sm:p-7 md:p-10  rounded-md shadow-xl bg-prime100/20  backdrop-blur  ">
           <p className=" mb-3 xsm:mb-5 sm:mb-8 text-xl xsm:text-2xl sm:text-3xl text-center font-semibold CormorantFont text-white  ">
-            Create post
+            Update Post
           </p>
 
           {/*  */}
@@ -339,4 +351,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default UpdatePost;

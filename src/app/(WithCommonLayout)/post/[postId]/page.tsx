@@ -33,7 +33,7 @@ const PostDetail = ({ params: { postId } }: IProps) => {
     content = (
       <div className="postDataContainer p-6  rounded-md shadow-md text-white flex flex-col gap-y-3 ">
         <PostDetailCard postData={postDetail?.data} />
-        <h1 className=" font-semibold text-2xl mb-3 mt-6 ">Comments</h1>
+        <h1 className=" font-semibold text-2xl mb-3 mt-6 ">Comments </h1>
 
         {postDetail?.data?.authorId?._id === user?._id ? " " : <Comment />}
 
