@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { toast } from "sonner";
 
 const Links = [
   { name: "Home", link: "/" },
@@ -39,6 +40,7 @@ const Navbar = () => {
   const handleLogout = () => {
     handleSetUser(null);
     handleSetToken(null);
+    toast.success("User logged out successfully !!");
     router.push("/");
   };
 

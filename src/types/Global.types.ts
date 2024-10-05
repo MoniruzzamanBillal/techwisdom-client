@@ -51,3 +51,14 @@ export type TPostsResponse = {
   isPremium: boolean;
   upvotes: number;
 };
+
+export type TComment = {
+  _id: string;
+  content: string;
+  postId: string;
+  userId: IUser;
+  isDeleted?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  __v?: number;
+};

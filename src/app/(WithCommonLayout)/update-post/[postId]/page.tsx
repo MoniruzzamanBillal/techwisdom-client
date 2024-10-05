@@ -181,14 +181,12 @@ const UpdatePost = ({ params: { postId } }: IProps) => {
 
       const result = await updatePostMutation({ formdata, id: postId });
 
-      //   console.log(result);
-
       if (result?.data) {
         toast.success("Post updated successfully !!! ");
 
         setTimeout(() => {
           router.push("/");
-        }, 300);
+        }, 200);
       }
     } catch (error: any) {
       toast.error("something went wrong while updating post !! ");
