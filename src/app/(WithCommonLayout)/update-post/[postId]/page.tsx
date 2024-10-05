@@ -15,7 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { useUserContext } from "@/context/user.provider";
-import { useCreatePost, useGetSinglePost } from "@/hooks/post.hook";
+import { useGetSinglePost, useUpdatePost } from "@/hooks/post.hook";
 import { FormSubmitLoading } from "@/components/ui";
 import { useRouter } from "next/navigation";
 
@@ -83,7 +83,10 @@ const UpdatePost = ({ params: { postId } }: IProps) => {
     isPending: postDataPending,
   } = useGetSinglePost(postId);
 
-  const { user, token } = useUserContext();
+  const { mutateAsync: updatePostMutation, isPending: postUpdating } =
+    useUpdatePost();
+
+  const { user } = useUserContext();
   const [categoryData, setCategoryData] = useState([]);
 
   const [selectedCategories, setSelectedCategories] = useState("");
@@ -114,7 +117,7 @@ const UpdatePost = ({ params: { postId } }: IProps) => {
       setValue(postDetail.data.content || "");
       setSelectedCategories(postDetail.data.category?._id || "");
       setPremiumContent(postDetail.data.isPremium ? "true" : "false");
-}
+    }
   }, [postDetail]);
 
   const handleSelectChange = (
@@ -165,8 +168,32 @@ const UpdatePost = ({ params: { postId } }: IProps) => {
       authorId: user?._id,
     };
 
+    const formdata = new FormData();
+
+    formdata.append("data", JSON.stringify(blogData));
+    formdata.append("file", titleImg);
+
     console.log(blogData);
     console.log(titleImg);
+
+    try {
+      //
+
+      const result = await updatePostMutation({ formdata, id: postId });
+
+      //   console.log(result);
+
+      if (result?.data) {
+        toast.success("Post updated successfully !!! ");
+
+        setTimeout(() => {
+          router.push("/");
+        }, 300);
+      }
+    } catch (error: any) {
+      toast.error("something went wrong while updating post !! ");
+      console.log(error);
+    }
   };
 
   let content = null;
@@ -322,7 +349,7 @@ const UpdatePost = ({ params: { postId } }: IProps) => {
 
   return (
     <div className="cratePostContainer py-3 bg-black50   ">
-      {/* {postCreatiionPending && <FormSubmitLoading />} */}
+      {postUpdating && <FormSubmitLoading />}
       <Wrapper className="createPostWrapper  flex justify-center items-center  ">
         {/* add post form  */}
         <div className="    w-[95%] xsm:w-[90%] m-auto p-3 xsm:p-5 sm:p-7 md:p-10  rounded-md shadow-xl bg-prime100/20  backdrop-blur  ">

@@ -57,3 +57,28 @@ export const getSinglePost = async (id: string) => {
     throw new Error(error);
   }
 };
+
+interface TUpdateProps {
+  formdata: FormData;
+  id: string;
+}
+
+// ! update post data
+export const updatePost = async ({ formdata, id }: TUpdateProps) => {
+  try {
+    const { data } = await axiosInstance.patch(
+      `/api/v1/post/update-post/${id}`,
+      formdata,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};

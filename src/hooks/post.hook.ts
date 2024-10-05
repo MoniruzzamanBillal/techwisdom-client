@@ -1,8 +1,11 @@
-import { getAllPosts, getSinglePost, makePost } from "@/services/PostServices";
+import {
+  getAllPosts,
+  getSinglePost,
+  makePost,
+  updatePost,
+} from "@/services/PostServices";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-
-// payload: FormData, token: string
 
 interface PostPayload {
   formdata: FormData;
@@ -36,6 +39,21 @@ export const useGetSinglePost = (id: string) => {
     queryFn: async ({ queryKey }) => {
       const postId = queryKey[1];
       return await getSinglePost(postId);
+    },
+  });
+};
+
+type TUpdatePostData = {
+  formdata: FormData;
+  id: string;
+};
+
+// ! for updating post
+export const useUpdatePost = () => {
+  return useMutation({
+    mutationKey: ["update-post"],
+    mutationFn: async ({ formdata, id }: TUpdatePostData) => {
+      return await updatePost({ formdata, id });
     },
   });
 };

@@ -187,11 +187,7 @@ const CreatePost = () => {
         </div>
       </>
     );
-  } 
-  
-  
-  
-  else if (!categoryDataLoading && categoryData?.length) {
+  } else if (!categoryDataLoading && categoryData?.length) {
     content = (
       <>
         <div className="createPostForm">
