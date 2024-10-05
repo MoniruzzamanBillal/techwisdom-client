@@ -1,11 +1,12 @@
 import Image from "next/image";
+import { Button } from "../../button";
 
 const UserCommentCard = () => {
   return (
-    <div className="UserCommentCardContainer  my-3 p-2 rounded-md bg-black50  ">
+    <div className="UserCommentCardContainer  my-3 p-3 rounded-md bg-black50  ">
       <div className="UserCommentWrapper   ">
         {/* writer info starts  */}
-        <div className="writerInfo  flex items-center gap-2 mb-1.5  ">
+        <div className="writerInfo  flex items-center gap-2 mb-2  ">
           {/* writer image  */}
           <div className="writerImg   ">
             <Image
@@ -23,10 +24,10 @@ const UserCommentCard = () => {
           {/* writer name  */}
 
           <div className="writerName   ">
-            <p className=" text-gray-800 font-semibold text-xs sm:text-sm ">
+            <p className=" text-gray-100 font-semibold text-xs sm:text-sm ">
               user name
             </p>
-            <p className=" text-gray-700 font-medium text-xs  ">
+            <p className=" text-gray-300 font-medium text-xs  ">
               2-october-2024
             </p>
           </div>
@@ -40,6 +41,17 @@ const UserCommentCard = () => {
           <p> this is user comment </p>
         </div>
         {/* user comment  */}
+
+        {/* edit delete button section  */}
+        <div className=" mt-3 editDeleteBtn text-xs flex items-center gap-x-4 ">
+          <p className=" underline text-green-600 font-semibold cursor-pointer ">
+            Edit
+          </p>
+          <p className=" underline text-red-600 font-semibold cursor-pointer ">
+            Delete
+          </p>
+        </div>
+        {/* edit delete button section  */}
 
         {/*  */}
       </div>

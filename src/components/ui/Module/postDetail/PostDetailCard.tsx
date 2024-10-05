@@ -1,8 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../../button";
+import { TPostsResponse } from "@/types/Global.types";
+import { format } from "date-fns";
 
-const PostDetailCard = () => {
+type IProps = {
+  postData: TPostsResponse;
+};
+
+const PostDetailCard = ({ postData }: IProps) => {
+  console.log(postData);
+
   return (
     <div className="PostDetailCardContainer text-white ">
       {/* detail top section starts  */}
@@ -10,7 +18,7 @@ const PostDetailCard = () => {
         {/* left side section starts  */}
         <div className="topLeftSection  w-full xsm:w-[94%]  xmd:w-[60%] ">
           <h1 className="  font-bold text-xl  sm:text-2xl xmd:text-3xl mb-3 leading-relaxed  ">
-            title
+            {postData?.title}
           </h1>
 
           {/* writer info starts  */}
@@ -20,7 +28,7 @@ const PostDetailCard = () => {
               <div className="writerImg    ">
                 <Image
                   className=" w-10 h-10 xsm:w-11 xsm:h-11 sm:w-12 sm:h-12 rounded-full"
-                  src={"https://i.ibb.co/B2XybXN/ABU-UBAIDAH-750x430-1.jpg"}
+                  src={postData?.authorId?.profilePicture}
                   alt="Rounded avatar "
                   height={700}
                   width={700}
@@ -31,11 +39,14 @@ const PostDetailCard = () => {
               {/* writer name  */}
 
               <div className="writerName   ">
-                <p className=" text-gray-100 font-medium text-sm sm:text-base ">
-                  blogwriter
+                <p className=" text-gray-50 font-medium text-sm sm:text-base ">
+                  {postData?.authorId?.name}
                 </p>
-                <p className=" text-gray-400 font-medium text-xs sm:text-sm  ">
-                  blogdate
+                <p className=" text-gray-300 font-medium text-xs   ">
+                  {format(
+                    new Date(postData?.createdAt as string),
+                    "dd-MMMM-yyyy"
+                  )}
                 </p>
               </div>
 
@@ -82,13 +93,10 @@ const PostDetailCard = () => {
       {/* detail top section ends  */}
 
       {/* blog detail bottom section starts  */}
-      <div className="blogDetailBottom  ">
-        <h1>blog detail bottom </h1>
-        <h1>blog detail bottom </h1>
-        <h1>blog detail bottom </h1>
-        <h1>blog detail bottom </h1>
-        <h1>blog detail bottom </h1>
-      </div>
+      <div
+        className="blogDetailBottom  "
+        dangerouslySetInnerHTML={{ __html: postData?.content }}
+      ></div>
 
       {/* blog detail bottom section ends  */}
     </div>

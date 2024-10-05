@@ -45,3 +45,15 @@ export const getAllPosts = async () => {
     throw new Error(error);
   }
 };
+
+// ! for getting single post
+export const getSinglePost = async (id: string) => {
+  try {
+    const { data } = await axiosInstance.get(`/api/v1/post/single-post/${id}`);
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
