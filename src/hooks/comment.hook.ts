@@ -1,4 +1,8 @@
-import { handleAddComment, handleUpdateComment } from "@/services/comment";
+import {
+  handleAddComment,
+  handleDeleteComment,
+  handleUpdateComment,
+} from "@/services/comment";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -30,5 +34,19 @@ export const useUpdateComment = () => {
     mutationKey: ["update-comment"],
     mutationFn: async ({ payload, id }: TUpdateComment) =>
       await handleUpdateComment({ payload, id }),
+  });
+};
+
+type TDeleteComment = {
+    payload: Record<string, unknown>;
+  id: string;
+};
+
+// ! for deleting a comment
+export const useDeleteComment = () => {
+  return useMutation({
+    mutationKey: ["delete-comment"],
+    mutationFn: async ({ payload , id }: TDeleteComment) =>
+      await handleDeleteComment({ payload , id }),
   });
 };

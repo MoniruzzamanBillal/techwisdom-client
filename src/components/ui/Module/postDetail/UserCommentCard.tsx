@@ -4,9 +4,10 @@ import { TComment } from "@/types/Global.types";
 import Image from "next/image";
 import { format } from "date-fns";
 import { useState } from "react";
-import { useUpdateComment } from "@/hooks/comment.hook";
+import { useDeleteComment, useUpdateComment } from "@/hooks/comment.hook";
 import { toast } from "sonner";
 import { useGetSinglePost } from "@/hooks/post.hook";
+import { useUserContext } from "@/context/user.provider";
 
 type TProps = {
   commentData: TComment;
@@ -14,10 +15,12 @@ type TProps = {
 };
 
 const UserCommentCard = ({ commentData, postId }: TProps) => {
+  const { user } = useUserContext();
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(commentData?.content);
 
   const { mutateAsync: updateComment } = useUpdateComment();
+  const { mutateAsync: deleteFunction } = useDeleteComment();
   const { refetch: postDetailRefetch } = useGetSinglePost(postId);
 
   const handleEditClick = () => {
@@ -26,20 +29,15 @@ const UserCommentCard = ({ commentData, postId }: TProps) => {
 
   // ! for updating comment
   const handleSaveClick = async () => {
-    // Create a new object to represent the updated comment
     const updatedComment = {
       content: editedContent,
     };
-
-    // console.log(updatedComment);
 
     try {
       const result = await updateComment({
         payload: updatedComment,
         id: commentData._id,
       });
-
-      console.log(result);
 
       if (result?.success) {
         postDetailRefetch();
@@ -57,6 +55,25 @@ const UserCommentCard = ({ commentData, postId }: TProps) => {
   const handleCancelClick = () => {
     setIsEditing(false); // Cancel editing and revert to original content
     setEditedContent(commentData.content); // Reset the edited content
+  };
+
+  // ! for deleting a comment
+  const handleDeleteCommnet = async () => {
+    const postData = {
+      postId,
+    };
+
+    const result = await deleteFunction({
+      payload: postData,
+      id: commentData._id,
+    });
+
+
+
+    if (result?.success) {
+      toast.success("Comment deleted successfully!!");
+      postDetailRefetch();
+    }
   };
 
   // console.log(commentData);
@@ -117,51 +134,46 @@ const UserCommentCard = ({ commentData, postId }: TProps) => {
           )}
         </div>
         {/* User comment */}
-        {/* user comment  */}
-
-        {/* edit delete button section  */}
-        {/* <div className=" mt-3 editDeleteBtn text-xs flex items-center gap-x-4 ">
-          <p className=" underline text-green-600 font-semibold cursor-pointer ">
-            Edit
-          </p>
-          <p className=" underline text-red-600 font-semibold cursor-pointer ">
-            Delete
-          </p>
-        </div> */}
 
         {/* Edit delete button section */}
-        <div className="mt-3 editDeleteBtn text-xs flex items-center gap-x-4">
-          {isEditing ? (
-            <>
-              <p
-                className="underline text-green-600 font-semibold cursor-pointer"
-                onClick={handleSaveClick}
-              >
-                Save
-              </p>
-              <p
-                className="underline text-red-600 font-semibold cursor-pointer"
-                onClick={handleCancelClick}
-              >
-                Cancel
-              </p>
-            </>
-          ) : (
-            <>
-              <p
-                className="underline text-green-600 font-semibold cursor-pointer"
-                onClick={handleEditClick}
-              >
-                Edit
-              </p>
-              <p className="underline text-red-600 font-semibold cursor-pointer">
-                Delete
-              </p>
-            </>
-          )}
-        </div>
+
+        {user?._id === commentData?.userId?._id && (
+          <div className="mt-3 editDeleteBtn text-xs flex items-center gap-x-4">
+            {isEditing ? (
+              <>
+                <p
+                  className="underline text-green-600 font-semibold cursor-pointer"
+                  onClick={handleSaveClick}
+                >
+                  Save
+                </p>
+                <p
+                  className="underline text-red-600 font-semibold cursor-pointer"
+                  onClick={handleCancelClick}
+                >
+                  Cancel
+                </p>
+              </>
+            ) : (
+              <>
+                <p
+                  className="underline text-green-600 font-semibold cursor-pointer"
+                  onClick={handleEditClick}
+                >
+                  Edit
+                </p>
+                <p
+                  onClick={handleDeleteCommnet}
+                  className="underline text-red-600 font-semibold cursor-pointer"
+                >
+                  Delete
+                </p>
+              </>
+            )}
+          </div>
+        )}
+
         {/* Edit delete button section */}
-        {/* edit delete button section  */}
 
         {/*  */}
       </div>

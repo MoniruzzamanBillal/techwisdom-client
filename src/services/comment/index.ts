@@ -44,3 +44,26 @@ export const handleUpdateComment = async ({
     throw new Error(error);
   }
 };
+
+type TDeleteCommentProps = {
+  payload: Record<string, unknown>;
+  id: string;
+};
+
+// ! for deleting comment
+export const handleDeleteComment = async ({
+  payload,
+  id,
+}: TDeleteCommentProps) => {
+  try {
+    const { data } = await axiosInstance.patch(
+      `/api/v1/comment/delete-comment/${id}`,
+      payload
+    );
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
