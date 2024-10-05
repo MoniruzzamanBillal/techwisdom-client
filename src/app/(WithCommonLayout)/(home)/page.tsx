@@ -1,13 +1,19 @@
 "use client";
 import Wrapper from "@/components/shared/Wrapper";
-import { BlogCard } from "@/components/ui";
+import { BlogCard, BlogCardLoading } from "@/components/ui";
 import { CategoryFilter, SortFilter } from "@/components/ui/Module";
+import { useGetPosts } from "@/hooks/post.hook";
+import { TPostsResponse } from "@/types/Global.types";
+
 import { useState } from "react";
 
 const Home = () => {
   const [type, setType] = useState("");
 
+  const { data: allPostData, isPending: blogsDataLoading } = useGetPosts();
+
   // console.log("in home page , type = ", type);
+  // console.log(allPostData?.data);
 
   return (
     <div className="HomePageContainer pt-4 bg-black50 min-h-screen ">
@@ -31,11 +37,15 @@ const Home = () => {
           {/* right section starts  */}
           <div className="contentSection   w-[84%] ">
             {/*  */}
-            <BlogCard />
-            <BlogCard />
-            <BlogCard />
-            <BlogCard />
-            <BlogCard />
+
+            {blogsDataLoading &&
+              [1, 2, 3].map((item, ind) => <BlogCardLoading key={ind} />)}
+
+            {allPostData?.data &&
+              allPostData?.data?.map((item: TPostsResponse) => (
+                <BlogCard key={item?._id} blogData={item} />
+              ))}
+
             {/*  */}
           </div>
           {/* right section ends  */}

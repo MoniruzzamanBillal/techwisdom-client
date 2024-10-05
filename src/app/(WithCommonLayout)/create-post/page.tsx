@@ -161,7 +161,7 @@ const CreatePost = () => {
       if (result?.success) {
         setTimeout(() => {
           router.push("/");
-        }, 500);
+        }, 300);
       }
     } catch (error) {
       toast.error("Somethng went wrong while creating post ", {

@@ -3,9 +3,10 @@ export type IUser = {
   name: string;
   email: string;
   profilePicture: string;
+  status?: string;
   isDeleted?: boolean;
   isVerified?: boolean;
-  userRole: "user" | "admin";
+  userRole?: "user" | "admin";
   followers?: string[];
   following?: string[];
   createdAt?: string;
@@ -32,4 +33,20 @@ export type TResponseCategory = {
   updatedAt?: string;
   isDeleted?: boolean;
   __v?: number;
+};
+
+export type TPostsResponse = {
+  _id: string;
+  title: string;
+  content: string;
+  postImg: string;
+  authorId: IUser;
+  category: TResponseCategory;
+  comments?: any[];
+  createdAt?: string;
+  updatedAt?: string;
+  downvotes: number;
+  isDeleted: boolean;
+  isPremium: boolean;
+  upvotes: number;
 };

@@ -2,6 +2,7 @@
 "use server";
 
 import envConfig from "@/config/envConfig";
+import axiosInstance from "@/lib/AxiosInstance";
 import axios from "axios";
 
 interface PostPayload {
@@ -9,9 +10,7 @@ interface PostPayload {
   token: string;
 }
 
-//   formdata: FormData,
-//   token: string
-
+// ! for making post
 export const makePost = async ({
   formdata,
   token,
@@ -27,6 +26,18 @@ export const makePost = async ({
         },
       }
     );
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
+
+// ! for getting all post
+export const getAllPosts = async () => {
+  try {
+    const { data } = await axiosInstance.get("/api/v1/post/all-post");
 
     return data;
   } catch (error: any) {
