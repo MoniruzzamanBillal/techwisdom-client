@@ -3,13 +3,18 @@ import Link from "next/link";
 import { Button } from "../../button";
 import { TPostsResponse } from "@/types/Global.types";
 import { format } from "date-fns";
+import { useUserContext } from "@/context/user.provider";
 
 type IProps = {
   postData: TPostsResponse;
 };
 
 const PostDetailCard = ({ postData }: IProps) => {
-  console.log(postData);
+  const { user } = useUserContext();
+
+  //   console.log(user);
+
+  //   console.log(postData);
 
   return (
     <div className="PostDetailCardContainer text-white ">
@@ -43,10 +48,11 @@ const PostDetailCard = ({ postData }: IProps) => {
                   {postData?.authorId?.name}
                 </p>
                 <p className=" text-gray-300 font-medium text-xs   ">
-                  {format(
-                    new Date(postData?.createdAt as string),
-                    "dd-MMMM-yyyy"
-                  )}
+                  {postData &&
+                    format(
+                      new Date(postData?.createdAt as string),
+                      "dd-MMMM-yyyy"
+                    )}
                 </p>
               </div>
 
@@ -58,18 +64,20 @@ const PostDetailCard = ({ postData }: IProps) => {
 
           {/* edit button starts  */}
           <div className="editContainer mt-7  ">
-            <Link
-              href={`/post/${1212}`}
-              className=" bg-red-500 text-gray-50 hover:bg-red-600 hover:text-gray-100 hover:scale-105 active:scale-100 hover:shadow-lg py-2 px-5 rounded transition-all duration-200 font-medium  navLinkFont "
-            >
-              Edit post
-            </Link>
-
-            <div className="followBtn">
-              <Button className=" bg-prime50 hover:bg-prime100  ">
-                Follow
-              </Button>
-            </div>
+            {postData?.authorId?._id === user?._id ? (
+              <Link
+                href={`/post/${1212}`}
+                className=" bg-red-500 text-gray-50 hover:bg-red-600 hover:text-gray-100 hover:scale-105 active:scale-100 hover:shadow-lg py-2 px-5 rounded transition-all duration-200 font-medium  navLinkFont "
+              >
+                Edit post
+              </Link>
+            ) : (
+              <div className="followBtn">
+                <Button className=" bg-prime50 hover:bg-prime100  ">
+                  Follow
+                </Button>
+              </div>
+            )}
           </div>
           {/* edit button ends  */}
         </div>
