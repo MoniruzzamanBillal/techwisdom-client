@@ -42,6 +42,7 @@ export type TPostsResponse = {
   postImg: string;
   authorId: IUser;
   category: TResponseCategory;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   comments?: any[];
   createdAt?: string;
   updatedAt?: string;

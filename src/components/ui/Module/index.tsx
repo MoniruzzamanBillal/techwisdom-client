@@ -5,3 +5,6 @@ export { default as ProfileImgSection } from "./userProfile/ProfileImgSection";
 export { default as FollowingCard } from "./userProfile/FollowingCard";
 export { default as SubscriptionCard } from "./userProfile/SubscriptionCard";
 export { default as SubscriptionDetail } from "./userProfile/SubscriptionDetail";
+export { default as PostDetailCard } from "./postDetail/PostDetailCard";
+export { default as Comment } from "./postDetail/Comment";
+export { default as UserCommentCard } from "./postDetail/UserCommentCard";
