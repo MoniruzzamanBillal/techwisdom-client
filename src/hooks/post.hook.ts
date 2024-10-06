@@ -2,6 +2,7 @@ import {
   getAllPosts,
   getSinglePost,
   getUserPosts,
+  handleDeletePost,
   makePost,
   updatePost,
 } from "@/services/PostServices";
@@ -66,6 +67,19 @@ export const useUpdatePost = () => {
     mutationKey: ["update-post"],
     mutationFn: async ({ formdata, id }: TUpdatePostData) => {
       return await updatePost({ formdata, id });
+    },
+  });
+};
+
+// ! for deleting post
+export const useDeletePost = () => {
+  return useMutation({
+    mutationKey: ["delete-post"],
+    mutationFn: async (id: string) => {
+      return await handleDeletePost(id);
+    },
+    onSuccess: () => {
+      toast.success("Post deleted successfully !!!");
     },
   });
 };

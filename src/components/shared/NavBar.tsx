@@ -34,7 +34,7 @@ const Navbar = () => {
 
   const { user, handleSetUser, handleSetToken } = useUserContext();
 
-  // console.log(user);
+  console.log(user);
 
   // ! logout function
   const handleLogout = () => {

@@ -50,8 +50,6 @@ export default function MyFollower() {
                       </p>
                     </div>
                     {/* left side container ends  */}
-
-                  
                   </div>
 
                   {/*  */}

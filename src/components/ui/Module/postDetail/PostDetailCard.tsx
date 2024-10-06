@@ -22,6 +22,9 @@ const PostDetailCard = ({ postData }: IProps) => {
   const { mutateAsync: unfollowUser, isPending: userUnfollowPending } =
     useUnfollowPerson();
 
+  console.log(user?.following);
+  // console.log(postData);
+
   // ! for following a user
   const handleFollowUser = async (followerId: string) => {
     const payload = {
@@ -38,7 +41,8 @@ const PostDetailCard = ({ postData }: IProps) => {
         handleSetUser(updatedUserInfo?.data);
       }
     } catch (error: any) {
-      console.log(error);
+      console.log(error?.response?.data);
+      console.log(error?.message);
       toast.error("Something went wrong while following user !!");
     }
   };

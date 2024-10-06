@@ -98,3 +98,17 @@ export const updatePost = async ({ formdata, id }: TUpdateProps) => {
     throw new Error(error);
   }
 };
+
+// ! for deleting post
+export const handleDeletePost = async (postId: string) => {
+  try {
+    const { data } = await axiosInstance.patch(
+      `/api/v1/post/delete-post/${postId}`
+    );
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
