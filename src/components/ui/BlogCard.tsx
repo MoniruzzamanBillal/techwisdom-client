@@ -52,12 +52,14 @@ const BlogCard = ({ blogData }: TBlogCardProps) => {
             <div className="dateContainer  ">
               {/* date  */}
               <div className="date  flex  gap-x-8 mb-3  ">
-                <p>
-                  {format(
-                    new Date(blogData?.createdAt as string),
-                    "dd-MMMM-yyyy"
-                  )}
-                </p>
+                {blogData?.createdAt && (
+                  <p>
+                    {format(
+                      new Date(blogData?.createdAt as string),
+                      "dd-MMMM-yyyy"
+                    )}
+                  </p>
+                )}
 
                 <p className=" font-semibold ">{blogData?.category?.cName}</p>
               </div>

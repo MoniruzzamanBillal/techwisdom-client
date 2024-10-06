@@ -30,7 +30,6 @@ const PostDetail = ({ params: { postId } }: IProps) => {
     refetch: postDetailRefetch,
   } = useGetSinglePost(postId);
 
-  
   const { mutateAsync: addComment } = useAddComment();
 
   const [comment, setComment] = useState<string | null>(null);
@@ -39,10 +38,8 @@ const PostDetail = ({ params: { postId } }: IProps) => {
 
   // ! for adding  comment
   const handleAddComment = async () => {
-    console.log(comment);
-
     if (!comment?.trim()) {
-      toast.error("Add comment !!");
+      toast.error("Add  comment !!");
       return;
     }
 
@@ -54,8 +51,6 @@ const PostDetail = ({ params: { postId } }: IProps) => {
 
     try {
       const result = await addComment(commentData);
-
-      // console.log(result);
 
       if (result?.data) {
         setComment("");
@@ -94,7 +89,11 @@ const PostDetail = ({ params: { postId } }: IProps) => {
 
         {postDetail?.data?.comments &&
           postDetail?.data?.comments?.map((commentData: TComment) => (
-            <UserCommentCard key={commentData?._id} commentData={commentData} postId={postId} />
+            <UserCommentCard
+              key={commentData?._id}
+              commentData={commentData}
+              postId={postId}
+            />
           ))}
       </div>
     );

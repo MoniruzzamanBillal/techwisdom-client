@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../../button";
 import { TPostsResponse } from "@/types/Global.types";
 import { format } from "date-fns";
 import { useUserContext } from "@/context/user.provider";
+import { useFollowPerson } from "@/hooks/user.hooks";
+import { toast } from "sonner";
 
 type IProps = {
   postData: TPostsResponse;
@@ -12,9 +16,41 @@ type IProps = {
 const PostDetailCard = ({ postData }: IProps) => {
   const { user } = useUserContext();
 
-  //   console.log(user);
+  const { mutateAsync: followUser } = useFollowPerson();
 
-  //   console.log(postData);
+  console.log(user);
+
+  // console.log(postData);
+  // console.log(postData?.authorId?._id);
+
+  // ! for following a user
+  const handleFollowUser = async (followerId: string) => {
+    const payload = {
+      followerId: user?._id as string,
+      followedUserId: followerId,
+    };
+
+    console.log(payload);
+
+    try {
+      const result = await followUser(payload);
+
+      console.log(result);
+    } catch (error: any) {
+      console.log(error);
+      toast.error("Something went wrong while following user !!");
+    }
+  };
+
+  // ! for unfollowing  a user
+  const handleUnfollowUser = (unfollowerId: string) => {
+    const payload = {
+      followerId: user?._id,
+      followedUserId: unfollowerId,
+    };
+
+    console.log(payload);
+  };
 
   return (
     <div className="PostDetailCardContainer text-white ">
@@ -71,9 +107,21 @@ const PostDetailCard = ({ postData }: IProps) => {
               >
                 Edit post
               </Link>
+            ) : user?.following?.includes(postData?.authorId?._id) ? (
+              <div className="unfollowBtn">
+                <Button
+                  className=" bg-gray-600 hover:bg-gray-700  "
+                  onClick={() => handleUnfollowUser(postData?.authorId?._id)}
+                >
+                  Following
+                </Button>
+              </div>
             ) : (
               <div className="followBtn">
-                <Button className=" bg-prime50 hover:bg-prime100  ">
+                <Button
+                  className=" bg-prime50 hover:bg-prime100  "
+                  onClick={() => handleFollowUser(postData?.authorId?._id)}
+                >
                   Follow
                 </Button>
               </div>

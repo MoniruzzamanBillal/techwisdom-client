@@ -68,8 +68,6 @@ const UserCommentCard = ({ commentData, postId }: TProps) => {
       id: commentData._id,
     });
 
-
-
     if (result?.success) {
       toast.success("Comment deleted successfully!!");
       postDetailRefetch();
