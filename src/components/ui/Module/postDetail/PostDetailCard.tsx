@@ -6,22 +6,21 @@ import { Button } from "../../button";
 import { TPostsResponse } from "@/types/Global.types";
 import { format } from "date-fns";
 import { useUserContext } from "@/context/user.provider";
-import { useFollowPerson } from "@/hooks/user.hooks";
+import { useFollowPerson, useUnfollowPerson } from "@/hooks/user.hooks";
 import { toast } from "sonner";
+import { getSpecificUser } from "@/services/user";
 
 type IProps = {
   postData: TPostsResponse;
 };
 
 const PostDetailCard = ({ postData }: IProps) => {
-  const { user } = useUserContext();
+  const { user, handleSetUser } = useUserContext();
 
-  const { mutateAsync: followUser } = useFollowPerson();
-
-  console.log(user);
-
-  // console.log(postData);
-  // console.log(postData?.authorId?._id);
+  const { mutateAsync: followUser, isPending: userFollowPending } =
+    useFollowPerson();
+  const { mutateAsync: unfollowUser, isPending: userUnfollowPending } =
+    useUnfollowPerson();
 
   // ! for following a user
   const handleFollowUser = async (followerId: string) => {
@@ -30,12 +29,14 @@ const PostDetailCard = ({ postData }: IProps) => {
       followedUserId: followerId,
     };
 
-    console.log(payload);
-
     try {
       const result = await followUser(payload);
 
-      console.log(result);
+      if (result?.success) {
+        const updatedUserInfo = await getSpecificUser(user?._id as string);
+        // * for setting the updated user value in state
+        handleSetUser(updatedUserInfo?.data);
+      }
     } catch (error: any) {
       console.log(error);
       toast.error("Something went wrong while following user !!");
@@ -43,13 +44,24 @@ const PostDetailCard = ({ postData }: IProps) => {
   };
 
   // ! for unfollowing  a user
-  const handleUnfollowUser = (unfollowerId: string) => {
+  const handleUnfollowUser = async (unfollowerId: string) => {
     const payload = {
-      followerId: user?._id,
+      followerId: user?._id as string,
       followedUserId: unfollowerId,
     };
 
-    console.log(payload);
+    try {
+      const result = await unfollowUser(payload);
+
+      if (result?.success) {
+        const updatedUserInfo = await getSpecificUser(user?._id as string);
+        // * for setting the updated user value in state
+        handleSetUser(updatedUserInfo?.data);
+      }
+    } catch (error: any) {
+      console.log(error);
+      toast.error("Something went wrong while unfollowing user !!");
+    }
   };
 
   return (
@@ -110,7 +122,10 @@ const PostDetailCard = ({ postData }: IProps) => {
             ) : user?.following?.includes(postData?.authorId?._id) ? (
               <div className="unfollowBtn">
                 <Button
-                  className=" bg-gray-600 hover:bg-gray-700  "
+                  disabled={userUnfollowPending}
+                  className={` bg-gray-600 hover:bg-gray-700  ${
+                    userUnfollowPending ? " cursor-not-allowed " : ""
+                  } `}
                   onClick={() => handleUnfollowUser(postData?.authorId?._id)}
                 >
                   Following
@@ -119,7 +134,10 @@ const PostDetailCard = ({ postData }: IProps) => {
             ) : (
               <div className="followBtn">
                 <Button
-                  className=" bg-prime50 hover:bg-prime100  "
+                  disabled={userFollowPending}
+                  className={` bg-prime50 hover:bg-prime100  ${
+                    userFollowPending ? "cursor-not-allowed" : ""
+                  } `}
                   onClick={() => handleFollowUser(postData?.authorId?._id)}
                 >
                   Follow

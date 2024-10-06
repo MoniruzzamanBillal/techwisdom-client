@@ -1,5 +1,5 @@
-import { followUser, unfollowUser } from "@/services/user";
-import { useMutation } from "@tanstack/react-query";
+import { followUser, getSpecificUser, unfollowUser } from "@/services/user";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 type TFollowRequest = {
@@ -25,6 +25,18 @@ export const useUnfollowPerson = () => {
     mutationFn: async (payload: TFollowRequest) => await unfollowUser(payload),
     onSuccess: () => {
       toast.success("User unfollowed successfully !!!");
+    },
+  });
+};
+
+// ! for getting single user
+export const useSpecificUser = (id: string) => {
+  return useQuery({
+    queryKey: ["get-specific-user", id],
+    queryFn: async ({ queryKey }) => {
+      const userId = queryKey[1];
+
+      return await getSpecificUser(userId);
     },
   });
 };
