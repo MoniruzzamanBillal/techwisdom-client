@@ -1,22 +1,58 @@
+"use client";
+
 import Wrapper from "@/components/shared/Wrapper";
-import { BlogCard } from "@/components/ui";
+import { BlogCard, BlogCardLoading, NoUserPost } from "@/components/ui";
 import { Button } from "@/components/ui/button";
 import { CategoryFilter, SortFilter } from "@/components/ui/Module";
+import { useUserContext } from "@/context/user.provider";
+import { useGetUserPost } from "@/hooks/post.hook";
+import { TPostsResponse } from "@/types/Global.types";
 import Link from "next/link";
-
-const options = [
-  {
-    name: "All",
-    value: "",
-  },
-  { name: "Sedan", value: "Sedan" },
-  { name: "SUV", value: "SUV" },
-  { name: "Coupe", value: "Coupe" },
-  { name: "Compact", value: "Compact" },
-  { name: "Minivan", value: "Minivan" },
-];
+import { useState } from "react";
 
 const UserProfile = () => {
+  const { token } = useUserContext();
+
+  const [type, setType] = useState("");
+
+  const { data: userPostData, isPending: userPostPending } = useGetUserPost(
+    token as string
+  );
+
+  // console.log(userPostData?.data);
+
+  let content = null;
+
+  // ! if user post data is loading
+  if (userPostPending) {
+    content = (
+      <>
+        {userPostPending &&
+          [1, 2, 3].map((item, ind) => <BlogCardLoading key={ind} />)}
+      </>
+    );
+  }
+
+  //! if there is no post
+  if (!userPostPending && userPostData?.data?.length < 1) {
+    content = <NoUserPost />;
+  }
+
+  // ! for user post
+  if (!userPostPending && userPostData?.data?.length) {
+    content = (
+      <>
+        {/*  */}
+        {userPostData?.data &&
+          userPostData?.data?.map((item: TPostsResponse) => (
+            <BlogCard key={item?._id} blogData={item} />
+          ))}
+
+        {/*  */}
+      </>
+    );
+  }
+
   return (
     <div className="userPostsContainer pt-4 ">
       <Wrapper className=" userPostsWrapper  ">
@@ -38,20 +74,12 @@ const UserProfile = () => {
         <div className="mainBody   flex flex-col xl:flex-row justify-between  gap-x-6 gap-y-8 ">
           {/* left side filter section starts  */}
           <div className="filterSection w-[100%] xl:w-[16%]  ">
-            <CategoryFilter options={options} />
+            <CategoryFilter type={type} setType={setType} />
           </div>
           {/* left side filter section ends  */}
 
           {/* right section starts  */}
-          <div className="contentSection   w-[84%] ">
-            {/*  */}
-            <BlogCard />
-            <BlogCard />
-            <BlogCard />
-            <BlogCard />
-
-            {/*  */}
-          </div>
+          <div className="contentSection   w-[84%] ">{content}</div>
           {/* right section ends  */}
         </div>
         {/* main body part ends  */}

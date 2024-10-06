@@ -46,6 +46,22 @@ export const getAllPosts = async () => {
   }
 };
 
+// ! for getting  user  post
+export const getUserPosts = async (token: string) => {
+  try {
+    const { data } = await axiosInstance.get("/api/v1/post/user-post", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
+
 // ! for getting single post
 export const getSinglePost = async (id: string) => {
   try {

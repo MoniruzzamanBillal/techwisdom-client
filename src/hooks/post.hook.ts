@@ -1,6 +1,7 @@
 import {
   getAllPosts,
   getSinglePost,
+  getUserPosts,
   makePost,
   updatePost,
 } from "@/services/PostServices";
@@ -29,6 +30,17 @@ export const useGetPosts = () => {
   return useQuery({
     queryKey: ["get-all-posts"],
     queryFn: async () => await getAllPosts(),
+  });
+};
+
+// ! for single  post
+export const useGetUserPost = (token: string) => {
+  return useQuery({
+    queryKey: ["get-user-post", token],
+    queryFn: async ({ queryKey }) => {
+      const userToken = queryKey[1];
+      return await getUserPosts(userToken);
+    },
   });
 };
 
