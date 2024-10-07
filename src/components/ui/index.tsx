@@ -8,3 +8,4 @@ export { default as PostDetailSkeletonLoading } from "./PostDetailSkeletonLoadin
 export { default as NoUserPost } from "./NoUserPost";
 export { default as PostDeleteModal } from "./PostDeleteModal";
 export { default as ManageUserModal } from "./ManageUserModal";
+export { default as AdminDeleteModal } from "./AdminDeleteModal";

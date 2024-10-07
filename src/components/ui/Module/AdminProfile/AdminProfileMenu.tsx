@@ -21,6 +21,10 @@ const adminProfileLinks: TUserProfile[] = [
     link: "/admin/manage-user",
   },
   {
+    label: "Manage Admins",
+    link: "/admin/manage-admin",
+  },
+  {
     label: "Payment History",
     link: "/admin/payment-history",
   },

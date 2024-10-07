@@ -2,6 +2,7 @@ import {
   blockUser,
   deleteUser,
   followUser,
+  getAllAdminUsers,
   getAllUsers,
   getSpecificUser,
   unblockUser,
@@ -52,9 +53,19 @@ export const useSpecificUser = (id: string) => {
 // ! for getting all user
 export const useGetAllUser = () => {
   return useQuery({
-    queryKey: ["get-all-user"] ,
+    queryKey: ["get-all-user"],
     queryFn: async () => {
       return await getAllUsers();
+    },
+  });
+};
+
+// ! for getting all admin user
+export const useGetAllAdminUser = () => {
+  return useQuery({
+    queryKey: ["get-all-admin-user"],
+    queryFn: async () => {
+      return await getAllAdminUsers();
     },
   });
 };

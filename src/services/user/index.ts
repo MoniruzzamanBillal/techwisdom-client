@@ -60,6 +60,18 @@ export const getAllUsers = async () => {
   }
 };
 
+// ! for getting all user data
+export const getAllAdminUsers = async () => {
+  try {
+    const { data } = await axiosInstance.get(`/api/v1/user/all-admin-user`);
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
+
 // ! for blocking user
 export const blockUser = async (id: string) => {
   try {
