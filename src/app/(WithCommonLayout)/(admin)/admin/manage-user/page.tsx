@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import Wrapper from "@/components/shared/Wrapper";
@@ -6,9 +7,16 @@ import {
   TableDataError,
   TableDataLoading,
 } from "@/components/ui";
-import { useGetAllUser } from "@/hooks/user.hooks";
+import {
+  useBlockUser,
+  useDeleteUser,
+  useGetAllUser,
+  useUnblockUser,
+} from "@/hooks/user.hooks";
 import { IUser } from "@/types/Global.types";
 import { UserRole } from "@/utils/Constants";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 const ManageUser = () => {
   const {
@@ -17,21 +25,57 @@ const ManageUser = () => {
     refetch: allUserDataRefetch,
   } = useGetAllUser();
 
-  console.log(allUserData?.data);
+  const { mutateAsync: blockUser } = useBlockUser();
+  const { mutateAsync: unblockUser } = useUnblockUser();
+  const { mutateAsync: deleteUser } = useDeleteUser();
+
+  // console.log(allUserData?.data);
 
   // ! for block user
-  const handleBlockUser = (userId: string) => {
-    console.log("block user = ", userId);
+  const handleBlockUser = async (userId: string) => {
+    try {
+      const result = await blockUser(userId);
+
+      if (result?.success) {
+        allUserDataRefetch();
+        window.location.reload();
+      }
+    } catch (error: any) {
+      console.log(error);
+      toast.error("Something went wrong while blocking user !! ");
+    }
   };
 
   // ! for unblock user
-  const handleUnblockUser = (userId: string) => {
-    console.log("unblock user = ", userId);
+  const handleUnblockUser = async (userId: string) => {
+    try {
+      const result = await unblockUser(userId);
+
+      console.log(result);
+
+      if (result?.success) {
+        allUserDataRefetch();
+        window.location.reload();
+      }
+    } catch (error: any) {
+      console.log(error);
+      toast.error("Something went wrong while unblocking user !! ");
+    }
   };
 
   // ! for deleting user
-  const handleDeleteUser = (userId: string) => {
-    console.log("delete user = ", userId);
+  const handleDeleteUser = async (userId: string) => {
+    try {
+      const result = await deleteUser(userId);
+
+      if (result?.success) {
+        allUserDataRefetch();
+        window.location.reload();
+      }
+    } catch (error: any) {
+      console.log(error);
+      toast.error("Something went wrong while deleting user !! ");
+    }
   };
 
   let content = null;

@@ -59,3 +59,43 @@ export const getAllUsers = async () => {
     throw new Error(error);
   }
 };
+
+// ! for blocking user
+export const blockUser = async (id: string) => {
+  try {
+    const { data } = await axiosInstance.patch(`/api/v1/user/block-user/${id}`);
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
+
+// ! for unblocking user
+export const unblockUser = async (id: string) => {
+  try {
+    const { data } = await axiosInstance.patch(
+      `/api/v1/user/unblock-user/${id}`
+    );
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
+
+// ! for delete user
+export const deleteUser = async (id: string) => {
+  try {
+    const { data } = await axiosInstance.patch(
+      `/api/v1/user/delete-user/${id}`
+    );
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};

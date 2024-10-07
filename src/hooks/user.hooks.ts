@@ -1,10 +1,13 @@
 import {
+  blockUser,
+  deleteUser,
   followUser,
   getAllUsers,
   getSpecificUser,
+  unblockUser,
   unfollowUser,
 } from "@/services/user";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 type TFollowRequest = {
@@ -49,9 +52,48 @@ export const useSpecificUser = (id: string) => {
 // ! for getting all user
 export const useGetAllUser = () => {
   return useQuery({
-    queryKey: ["get-all-user"],
+    queryKey: ["get-all-user"] ,
     queryFn: async () => {
       return await getAllUsers();
+    },
+  });
+};
+
+// ! for blocking a user
+export const useBlockUser = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationKey: ["block-user"],
+    mutationFn: async (id: string) => await blockUser(id),
+    onSuccess: () => {
+      toast.success("User blocked successfully !!!");
+      queryClient.invalidateQueries({ queryKey: ["get-all-user"] });
+    },
+  });
+};
+
+// ! for unblocking a user
+export const useUnblockUser = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationKey: ["unblock-user"],
+    mutationFn: async (id: string) => await unblockUser(id),
+    onSuccess: () => {
+      toast.success("User unblocked successfully !!!");
+      queryClient.invalidateQueries({ queryKey: ["get-all-user"] });
+    },
+  });
+};
+
+// ! for deleting a user
+export const useDeleteUser = () => {
+  return useMutation({
+    mutationKey: ["delete-user"],
+    mutationFn: async (id: string) => await deleteUser(id),
+    onSuccess: () => {
+      toast.success("User deleted successfully !!!");
     },
   });
 };
