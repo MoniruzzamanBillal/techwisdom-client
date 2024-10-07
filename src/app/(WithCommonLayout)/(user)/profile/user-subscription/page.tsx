@@ -1,15 +1,30 @@
 "use client";
 
 import Wrapper from "@/components/shared/Wrapper";
-import { SubscriptionDetail } from "@/components/ui/Module";
+import { SubscriptionCard, SubscriptionDetail } from "@/components/ui/Module";
+import { useUserContext } from "@/context/user.provider";
 
 const UserScribtion = () => {
+  const { user } = useUserContext();
+
+  // console.log(user);
+
+  let content = null;
+
+  // ! if user is not verified , show card
+  if (!user?.isVerified) {
+    content = <SubscriptionCard userId={user?._id as string } />;
+  }
+
+  // ! if user is verified then show detail
+  if (user?.isVerified) {
+    content = <SubscriptionDetail  />;
+  }
+
   return (
     <div className="userSubscriptionContainer pt-4 ">
       <Wrapper className=" userSubscriptionWrapper p-6 bg-black100 rounded-md text-white shadow-md  ">
-        {/* <SubscriptionCard /> */}
-
-        <SubscriptionDetail />
+        {content}
       </Wrapper>
     </div>
   );

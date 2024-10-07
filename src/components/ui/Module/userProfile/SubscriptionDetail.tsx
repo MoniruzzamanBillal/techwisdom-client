@@ -10,12 +10,12 @@ const SubscriptionDetail = () => {
   };
 
   return (
-    <div className="SubscriptionDetailContainer">
+    <div className="SubscriptionDetailContainer  ">
       <div className="SubscriptionDetailWrapper">
         <h1 className=" text-center mb-10 ">You are already subscribed </h1>
 
-        <div className="subscriptionDetail   w-[95%] sm:w-[85%] md:w-[75%] lg:w-[65%] m-auto ">
-          <h2 className=" font-semibold text-gray-200 text-center mb-14 ">
+        <div className="subscriptionDetail bg-black50 p-6 rounded-md w-[95%] sm:w-[85%] md:w-[75%] lg:w-[65%] m-auto shadow-md ">
+          <h2 className=" font-semibold text-gray-200 text-center mb-12 ">
             Subscription Details
           </h2>
 

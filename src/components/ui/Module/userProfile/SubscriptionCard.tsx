@@ -1,6 +1,44 @@
-const SubscriptionCard = () => {
+"use client";
+
+import { usePayment } from "@/hooks/payment.hook";
+import { toast } from "sonner";
+import FormSubmitLoading from "../../FormSubmitLoading";
+import { useUserContext } from "@/context/user.provider";
+import { getSpecificUser } from "@/services/user";
+
+const SubscriptionCard = ({ userId }: { userId: string }) => {
+  const { mutateAsync: handlePay, isPending: paymentLoading } = usePayment();
+
+  // ! for subscribing
+  const handleSubscribe = async () => {
+    try {
+      const payload = {
+        userId,
+        amount: "40",
+      };
+
+      const result = await handlePay(payload);
+
+      console.log(result);
+
+      if (result?.success) {
+        const paymentUrl = result?.data?.payment_url;
+        console.log(paymentUrl);
+
+        window.location.href = paymentUrl;
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.log(error);
+      toast.error("Something went wrong while subscribing !!!");
+    }
+  };
+
   return (
     <div className="SubscriptionCardContainer">
+      {paymentLoading && <FormSubmitLoading />}
+
       <div className="   flex justify-center  px-8  text-zinc-800 mt-10 ">
         <div className="flex flex-col items-center bg-gradient-to-br from-blue-100 via-gray-100 to-purple-100 p-8 rounded-lg shadow-lg relative border-8 border-orange-200   ">
           <svg
@@ -22,7 +60,7 @@ const SubscriptionCard = () => {
           <div>
             <div className="flex gap-4 justify-center">
               <div className="flex flex-col items-center my-8">
-                <p className="font-extrabold text-4xl">$79</p>
+                <p className="font-extrabold text-4xl">$40</p>
                 <p className="text-sm opacity-60">/month</p>
               </div>
             </div>
@@ -107,7 +145,10 @@ const SubscriptionCard = () => {
               Premium Support
             </p>
             <div className="flex justify-center mt-8">
-              <button className="px-4 py-2 border-violet-400 border-4 hover:bg-violet-100 rounded-xl">
+              <button
+                onClick={handleSubscribe}
+                className="px-4 py-2 border-violet-400 border-4 bg-violet-100 hover:bg-violet-200 rounded-xl"
+              >
                 Subscribe Now
               </button>
             </div>
