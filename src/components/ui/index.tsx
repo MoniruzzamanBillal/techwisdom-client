@@ -7,3 +7,4 @@ export { default as BlogCardLoading } from "./BlogCardLoading";
 export { default as PostDetailSkeletonLoading } from "./PostDetailSkeletonLoading";
 export { default as NoUserPost } from "./NoUserPost";
 export { default as PostDeleteModal } from "./PostDeleteModal";
+export { default as ManageUserModal } from "./ManageUserModal";

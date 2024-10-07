@@ -1,4 +1,9 @@
-import { followUser, getSpecificUser, unfollowUser } from "@/services/user";
+import {
+  followUser,
+  getAllUsers,
+  getSpecificUser,
+  unfollowUser,
+} from "@/services/user";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -37,6 +42,16 @@ export const useSpecificUser = (id: string) => {
       const userId = queryKey[1];
 
       return await getSpecificUser(userId);
+    },
+  });
+};
+
+// ! for getting all user
+export const useGetAllUser = () => {
+  return useQuery({
+    queryKey: ["get-all-user"],
+    queryFn: async () => {
+      return await getAllUsers();
     },
   });
 };

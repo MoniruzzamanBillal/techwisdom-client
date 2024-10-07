@@ -47,3 +47,15 @@ export const getSpecificUser = async (id: string) => {
     throw new Error(error);
   }
 };
+
+// ! for getting all user data
+export const getAllUsers = async () => {
+  try {
+    const { data } = await axiosInstance.get(`/api/v1/user/all-user`);
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
