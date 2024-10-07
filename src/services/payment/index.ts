@@ -19,3 +19,17 @@ export const confirmPayment = async (payment: TPaymentProps) => {
     throw new Error(error);
   }
 };
+
+// ! for getting subscriber data
+export const getSubscriber = async (id: string) => {
+  try {
+    const { data } = await axiosInstance.get(
+      `/api/v1/payment/get-subscriber/${id}`
+    );
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};

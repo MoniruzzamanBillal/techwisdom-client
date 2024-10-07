@@ -1,16 +1,24 @@
-const SubscriptionDetail = () => {
-  const subscription = {
-    planName: "Standard Plan",
-    status: "Active",
-    startDate: "2024-10-01",
-    renewalDate: "2024-11-01",
-    amount: "$20/month",
-    paymentMethod: "Visa **** 1234",
-    features: ["Unlimited access", "Priority support", "Ad-free experience"],
-  };
+"use client";
+import { format } from "date-fns";
+import { useGetSubscriber } from "@/hooks/payment.hook";
+import FormSubmitLoading from "../../FormSubmitLoading";
+
+const subscription = {
+  planName: "Standard Plan",
+  amount: "$20/month",
+  features: ["Unlimited access", "Priority support", "Ad-free experience"],
+};
+
+const SubscriptionDetail = ({ userId }: { userId: string }) => {
+  const { data: userSubscriberData, isLoading: userSubscriberDataLoading } =
+    useGetSubscriber(userId);
+
+  // console.log(userSubscriberData?.data);
 
   return (
     <div className="SubscriptionDetailContainer  ">
+      {userSubscriberDataLoading && <FormSubmitLoading />}
+
       <div className="SubscriptionDetailWrapper">
         <h1 className=" text-center mb-10 ">You are already subscribed </h1>
 
@@ -28,13 +36,21 @@ const SubscriptionDetail = () => {
           {/* Status */}
           <div className="mb-4">
             <h3 className="font-semibold text-gray-200 text-xl ">Status:</h3>
-            <p className="text-gray-300 text-lg">{subscription.status}</p>
+            <p className="text-gray-300 text-lg">
+              {userSubscriberData?.data?.status}
+            </p>
           </div>
 
           {/* Start Date */}
           <div className="mb-4">
             <h3 className="font-semibold text-gray-200 text-xl">Start Date:</h3>
-            <p className="text-gray-300 text-lg">{subscription.startDate}</p>
+            <p className="text-gray-300 text-lg">
+              {userSubscriberData?.data?.startDate &&
+                format(
+                  new Date(userSubscriberData?.data?.startDate),
+                  "dd-MMMM-yyyy"
+                )}
+            </p>
           </div>
 
           {/* Renewal Date */}
@@ -42,7 +58,13 @@ const SubscriptionDetail = () => {
             <h3 className="font-semibold text-gray-200 text-xl">
               Renewal Date:
             </h3>
-            <p className="text-gray-300 text-lg">{subscription.renewalDate}</p>
+            <p className="text-gray-300 text-lg">
+              {userSubscriberData?.data?.endDate &&
+                format(
+                  new Date(userSubscriberData?.data?.endDate),
+                  "dd-MMMM-yyyy"
+                )}
+            </p>
           </div>
 
           {/* Billing Amount */}

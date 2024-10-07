@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { confirmPayment } from "@/services/payment";
-import { useMutation } from "@tanstack/react-query";
+import { confirmPayment, getSubscriber } from "@/services/payment";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 type TPaymentProps = {
@@ -14,6 +14,18 @@ export const usePayment = () => {
     mutationFn: async (payload: TPaymentProps) => await confirmPayment(payload),
     onSuccess: () => {
       toast.success("Proceding payment!!!");
+    },
+  });
+};
+
+// ! for getting subscriber data
+export const useGetSubscriber = (id: string) => {
+  return useQuery({
+    queryKey: ["get-subscriber", id],
+    queryFn: async ({ queryKey }) => {
+      const userId = queryKey[1];
+
+      return await getSubscriber(userId);
     },
   });
 };

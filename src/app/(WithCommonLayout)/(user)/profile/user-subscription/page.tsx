@@ -7,18 +7,16 @@ import { useUserContext } from "@/context/user.provider";
 const UserScribtion = () => {
   const { user } = useUserContext();
 
-  // console.log(user);
-
   let content = null;
 
   // ! if user is not verified , show card
   if (!user?.isVerified) {
-    content = <SubscriptionCard userId={user?._id as string } />;
+    content = <SubscriptionCard userId={user?._id as string} />;
   }
 
   // ! if user is verified then show detail
   if (user?.isVerified) {
-    content = <SubscriptionDetail  />;
+    content = <SubscriptionDetail userId={user?._id as string} />;
   }
 
   return (

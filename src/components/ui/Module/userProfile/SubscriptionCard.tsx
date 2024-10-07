@@ -3,8 +3,6 @@
 import { usePayment } from "@/hooks/payment.hook";
 import { toast } from "sonner";
 import FormSubmitLoading from "../../FormSubmitLoading";
-import { useUserContext } from "@/context/user.provider";
-import { getSpecificUser } from "@/services/user";
 
 const SubscriptionCard = ({ userId }: { userId: string }) => {
   const { mutateAsync: handlePay, isPending: paymentLoading } = usePayment();
