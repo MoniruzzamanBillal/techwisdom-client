@@ -81,7 +81,7 @@ const ManageAdmins = () => {
         </td>
 
         <td className="p-4 text-center">
-          <Link href={`/dashboard/update-car/`}>
+          <Link href={`/update-admin/${adminData?._id}`}>
             <Button className=" px-3 xsm:px-4 sm:px-5 md:px-6 font-semibold text-xs sm:text-sm md:text-base bg-green-600 hover:bg-green-700 active:scale-95 duration-500 ">
               Update
             </Button>
