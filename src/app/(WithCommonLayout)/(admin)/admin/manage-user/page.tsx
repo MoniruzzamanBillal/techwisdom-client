@@ -15,7 +15,6 @@ import {
 } from "@/hooks/user.hooks";
 import { IUser } from "@/types/Global.types";
 import { UserRole } from "@/utils/Constants";
-import { useEffect } from "react";
 import { toast } from "sonner";
 
 const ManageUser = () => {
@@ -38,7 +37,6 @@ const ManageUser = () => {
 
       if (result?.success) {
         allUserDataRefetch();
-        window.location.reload();
       }
     } catch (error: any) {
       console.log(error);
@@ -55,7 +53,6 @@ const ManageUser = () => {
 
       if (result?.success) {
         allUserDataRefetch();
-        window.location.reload();
       }
     } catch (error: any) {
       console.log(error);
@@ -70,7 +67,6 @@ const ManageUser = () => {
 
       if (result?.success) {
         allUserDataRefetch();
-        window.location.reload();
       }
     } catch (error: any) {
       console.log(error);

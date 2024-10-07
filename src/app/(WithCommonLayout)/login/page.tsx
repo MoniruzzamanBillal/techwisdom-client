@@ -28,9 +28,6 @@ const Login = () => {
     try {
       const response = await handleUserLogin(data);
 
-      // console.log(response?.data);
-      // console.log(response?.token);
-
       handleSetUser(response?.data);
       handleSetToken(response?.token);
 

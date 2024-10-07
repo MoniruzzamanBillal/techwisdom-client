@@ -30,7 +30,6 @@ const ManageAdmins = () => {
 
       if (result?.success) {
         adminUserDataRefetch();
-        window.location.reload();
       }
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -108,7 +107,7 @@ const ManageAdmins = () => {
 
         {/* create new admin button  */}
         <div className="addPostBtn mb-6  ">
-          <Link href={"/create-post"}>
+          <Link href={"/admin-register"}>
             <Button className=" px-3 xsm:px-4 sm:px-5 md:px-6 font-semibold text-xs sm:text-sm md:text-base bg-prime50 hover:bg-prime100 active:scale-95 duration-500 ">
               Add new admin
             </Button>
