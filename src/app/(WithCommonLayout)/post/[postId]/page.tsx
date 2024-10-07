@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import Wrapper from "@/components/shared/Wrapper";
@@ -9,10 +10,16 @@ import {
 } from "@/components/ui/Module";
 import { useUserContext } from "@/context/user.provider";
 import { useAddComment } from "@/hooks/comment.hook";
-import { useGetSinglePost } from "@/hooks/post.hook";
+import {
+  useGetSinglePost,
+  useGiveUpvote,
+  useGiveDownvote,
+} from "@/hooks/post.hook";
 import { TComment } from "@/types/Global.types";
 import { useState } from "react";
 import { toast } from "sonner";
+
+import { BiSolidLike, BiSolidDislike } from "react-icons/bi";
 
 type IProps = {
   params: {
@@ -22,6 +29,12 @@ type IProps = {
 
 const PostDetail = ({ params: { postId } }: IProps) => {
   const { user } = useUserContext();
+
+  const { mutateAsync: GiveUpvote, isPending: upvoteGivingPending } =
+    useGiveUpvote();
+
+  const { mutateAsync: GiveDownvote, isPending: downvoteGivingPending } =
+    useGiveDownvote();
 
   const {
     data: postDetail,
@@ -35,6 +48,39 @@ const PostDetail = ({ params: { postId } }: IProps) => {
   const [comment, setComment] = useState<string | null>(null);
 
   // console.log(postDetail?.data);
+
+  // ! for giving upcote
+  const handleGiveUpvote = async () => {
+    try {
+      console.log("giving upvote!!!");
+
+      const payload = {
+        postId: postDetail?.data?._id,
+        userId: user?._id,
+      };
+
+      console.log(payload);
+    } catch (error: any) {
+      toast.error("Something went wrong while upvoting !!");
+      console.log(error);
+    }
+  };
+
+  // ! for giving downvote
+  const handleGiveDownvote = async () => {
+    try {
+      console.log("giving Downvote!!!");
+      const payload = {
+        postId: postDetail?.data?._id,
+        userId: user?._id,
+      };
+
+      console.log(payload);
+    } catch (error: any) {
+      toast.error("Something went wrong while downvoting !!");
+      console.log(error);
+    }
+  };
 
   // ! for adding  comment
   const handleAddComment = async () => {
@@ -75,6 +121,31 @@ const PostDetail = ({ params: { postId } }: IProps) => {
     content = (
       <div className="postDataContainer p-6  rounded-md shadow-md text-white flex flex-col gap-y-3 ">
         <PostDetailCard postData={postDetail?.data} />
+
+        {/* upvote downvote section  */}
+        <div className="upvoteDownvoteContainer py-2 mt-3 flex flex-col gap-y-3 border-y border-gray-500  ">
+          {/*  */}
+          <div className="upvoteContainer flex items-center gap-x-2 text-2xl ">
+            <p>Give Upvote : </p>
+
+            <BiSolidLike
+              onClick={handleGiveUpvote}
+              className=" text-3xl text-prime100 cursor-pointer "
+            />
+          </div>
+          {/*  */}
+
+          <div className="downVoteContainer  flex items-center gap-x-2 text-2xl ">
+            <p>Give Downvote : </p>
+
+            <BiSolidDislike
+              onClick={handleGiveDownvote}
+              className=" text-3xl text-prime100 cursor-pointer "
+            />
+          </div>
+        </div>
+        {/* upvote downvote section  */}
+
         <h1 className=" font-semibold text-2xl mb-3 mt-6 ">Comments </h1>
 
         {postDetail?.data?.authorId?._id === user?._id ? (

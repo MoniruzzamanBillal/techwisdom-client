@@ -36,10 +36,24 @@ export const unfollowUser = async (payload: TFollowRequest) => {
   }
 };
 
-// ! for getting single user data
+// ! for getting specific user data
 export const getSpecificUser = async (id: string) => {
   try {
     const { data } = await axiosInstance.get(`/api/v1/user/get-user/${id}`);
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
+
+// ! for getting single user data
+export const getSingleUser = async (id: string) => {
+  try {
+    const { data } = await axiosInstance.get(
+      `/api/v1/user/get-single-user/${id}`
+    );
 
     return data;
   } catch (error: any) {

@@ -4,6 +4,7 @@ import {
   followUser,
   getAllAdminUsers,
   getAllUsers,
+  getSingleUser,
   getSpecificUser,
   unblockUser,
   unfollowUser,
@@ -38,7 +39,7 @@ export const useUnfollowPerson = () => {
   });
 };
 
-// ! for getting single user
+// ! for getting specific user
 export const useSpecificUser = (id: string) => {
   return useQuery({
     queryKey: ["get-specific-user", id],
@@ -46,6 +47,18 @@ export const useSpecificUser = (id: string) => {
       const userId = queryKey[1];
 
       return await getSpecificUser(userId);
+    },
+  });
+};
+
+// ! for getting single user
+export const useGetSingleUser = (id: string) => {
+  return useQuery({
+    queryKey: ["get-single-user", id],
+    queryFn: async ({ queryKey }) => {
+      const userId = queryKey[1];
+
+      return await getSingleUser(userId);
     },
   });
 };

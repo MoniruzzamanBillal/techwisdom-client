@@ -6,7 +6,11 @@ import { Button } from "../../button";
 import { TPostsResponse } from "@/types/Global.types";
 import { format } from "date-fns";
 import { useUserContext } from "@/context/user.provider";
-import { useFollowPerson, useUnfollowPerson } from "@/hooks/user.hooks";
+import {
+  useFollowPerson,
+  useGetSingleUser,
+  useUnfollowPerson,
+} from "@/hooks/user.hooks";
 import { toast } from "sonner";
 import { getSpecificUser } from "@/services/user";
 
@@ -17,13 +21,14 @@ type IProps = {
 const PostDetailCard = ({ postData }: IProps) => {
   const { user, handleSetUser } = useUserContext();
 
+  const { data: userData, refetch: userDataRefetch } = useGetSingleUser(
+    user?._id as string
+  );
+
   const { mutateAsync: followUser, isPending: userFollowPending } =
     useFollowPerson();
   const { mutateAsync: unfollowUser, isPending: userUnfollowPending } =
     useUnfollowPerson();
-
-  console.log(user?.following);
-  // console.log(postData);
 
   // ! for following a user
   const handleFollowUser = async (followerId: string) => {
@@ -39,6 +44,7 @@ const PostDetailCard = ({ postData }: IProps) => {
         const updatedUserInfo = await getSpecificUser(user?._id as string);
         // * for setting the updated user value in state
         handleSetUser(updatedUserInfo?.data);
+        userDataRefetch();
       }
     } catch (error: any) {
       console.log(error?.response?.data);
@@ -61,6 +67,7 @@ const PostDetailCard = ({ postData }: IProps) => {
         const updatedUserInfo = await getSpecificUser(user?._id as string);
         // * for setting the updated user value in state
         handleSetUser(updatedUserInfo?.data);
+        userDataRefetch();
       }
     } catch (error: any) {
       console.log(error);
@@ -123,7 +130,7 @@ const PostDetailCard = ({ postData }: IProps) => {
               >
                 Edit post
               </Link>
-            ) : user?.following?.includes(postData?.authorId?._id) ? (
+            ) : userData?.data?.following?.includes(postData?.authorId?._id) ? (
               <div className="unfollowBtn">
                 <Button
                   disabled={userUnfollowPending}

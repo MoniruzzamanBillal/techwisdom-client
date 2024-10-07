@@ -112,3 +112,38 @@ export const handleDeletePost = async (postId: string) => {
     throw new Error(error);
   }
 };
+
+type TUpvoteDownvote = {
+  postId: string;
+  userId: string;
+};
+
+// ! for giving upvote
+export const giveUpvotes = async (payload: TUpvoteDownvote) => {
+  try {
+    const { data } = await axiosInstance.patch(
+      "/api/v1/post/upvote-post",
+      payload
+    );
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
+
+// ! for giving downvotes
+export const giveDownVote = async (payload: TUpvoteDownvote) => {
+  try {
+    const { data } = await axiosInstance.patch(
+      "/api/v1/post/downvote-post",
+      payload
+    );
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};

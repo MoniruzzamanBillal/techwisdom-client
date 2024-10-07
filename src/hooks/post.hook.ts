@@ -2,9 +2,11 @@ import {
   getAllPosts,
   getSinglePost,
   getUserPosts,
+  giveUpvotes,
   handleDeletePost,
   makePost,
   updatePost,
+  giveDownVote,
 } from "@/services/PostServices";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -80,6 +82,33 @@ export const useDeletePost = () => {
     },
     onSuccess: () => {
       toast.success("Post deleted successfully !!!");
+    },
+  });
+};
+
+type TUpvoteDownvote = {
+  postId: string;
+  userId: string;
+};
+
+// ! for giving upvote
+export const useGiveUpvote = () => {
+  return useMutation({
+    mutationKey: ["upvote-post"],
+    mutationFn: async (payload: TUpvoteDownvote) => await giveUpvotes(payload),
+    onSuccess: () => {
+      toast.success("Upvote given successfully !!!");
+    },
+  });
+};
+
+// ! for giving downvote
+export const useGiveDownvote = () => {
+  return useMutation({
+    mutationKey: ["downvote-post"],
+    mutationFn: async (payload: TUpvoteDownvote) => await giveDownVote(payload),
+    onSuccess: () => {
+      toast.success("Upvote given successfully !!!");
     },
   });
 };
