@@ -46,6 +46,11 @@ const BlogCard = ({ blogData }: TBlogCardProps) => {
               ""
             )}
 
+{/* caregory  */}
+<p className=" mb-3 text-xs font-semibold py-2  ">
+             Category :   <span className=" text-prime100 " >  {blogData?.category?.cName}   </span>    
+              </p>
+{/* caregory  */}
 
             {/* premium text content  */}
 
@@ -62,7 +67,7 @@ const BlogCard = ({ blogData }: TBlogCardProps) => {
                   </p>
                 )}
 
-                <p className=" font-semibold ">{blogData?.category?.cName}</p>
+              
               </div>
               {/* date  */}
             </div>

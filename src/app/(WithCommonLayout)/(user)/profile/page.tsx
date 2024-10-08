@@ -6,20 +6,60 @@ import { Button } from "@/components/ui/button";
 import { CategoryFilter, SortFilter } from "@/components/ui/Module";
 import { useUserContext } from "@/context/user.provider";
 import { useGetUserPost } from "@/hooks/post.hook";
+import useDebounce from "@/hooks/UseDebounceHook";
 import { TPostsResponse } from "@/types/Global.types";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const UserProfile = () => {
   const { token } = useUserContext();
 
   const [type, setType] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sort, setSortBy] = useState("");
+
+  const debounceTerm = useDebounce(searchTerm , 500 ) 
+  const [params, setParams] = useState<Record<string, unknown> | undefined>(
+    undefined
+  );
+
 
   const { data: userPostData, isPending: userPostPending } = useGetUserPost(
-    token as string
+    token as string ,params
   );
 
   // console.log(userPostData?.data);
+  console.log(params);
+
+
+     //! Use effect to track param value
+     useEffect(() => {
+      const updateParam = () => {
+        const newParam: Record<string, unknown> = {};
+  
+        
+       
+        if (debounceTerm) {
+          newParam.searchTerm = debounceTerm;
+        }
+       
+      
+  
+        if (type) {
+          newParam.type = type;
+        }
+  
+        if (sort) {
+          newParam.sort = sort;
+        }
+  
+        setParams(newParam);
+      };
+  
+      updateParam();
+    }, [ debounceTerm ,  type, sort]);
+
+
 
   let content = null;
 
@@ -67,7 +107,7 @@ const UserProfile = () => {
         {/* add post button ends  */}
 
         <div className="searchFilterSection mb-4 ">
-          <SortFilter />
+        <SortFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm} sort={sort} setSortBy={setSortBy} />
         </div>
 
         {/* main body part starts  */}

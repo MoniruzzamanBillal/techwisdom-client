@@ -9,7 +9,7 @@ import { MdVerifiedUser } from "react-icons/md";
 const ProfileImgSection = () => {
   const { user } = useUserContext();
 
-  console.log("in profile image section = ", user);
+  // console.log("in profile image section = ", user);
   // console.log(user?.followers?.length);
 
   return (

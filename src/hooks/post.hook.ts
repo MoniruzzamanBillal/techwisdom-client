@@ -29,7 +29,7 @@ export const useCreatePost = () => {
 };
 
 // ! for getting all post
-export const useGetPosts = (params?: Record<string, unknown>) => {
+export const useGetPosts = (params?: Record<string, unknown> ) => {
   return useQuery({
     queryKey: ["get-all-posts" , params],
     queryFn: async () => await getAllPosts(params),
@@ -37,13 +37,16 @@ export const useGetPosts = (params?: Record<string, unknown>) => {
 };
 
 // ! for single  post
-export const useGetUserPost = (token: string) => {
+export const useGetUserPost = ( token: string,
+  params?: Record<string, unknown> ) => {
   return useQuery({
-    queryKey: ["get-user-post", token],
+    queryKey: ["get-user-post", token , params],
     queryFn: async ({ queryKey }) => {
-      const userToken = queryKey[1];
-      return await getUserPosts(userToken);
-    },
+      const token = queryKey[1] as string 
+      const params = queryKey[2] as Record<string, unknown> | undefined;
+      
+      return await getUserPosts(token , params );
+    }, enabled : !!token
   });
 };
 

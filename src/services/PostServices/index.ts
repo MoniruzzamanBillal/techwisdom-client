@@ -49,12 +49,19 @@ export const getAllPosts = async (params?: Record<string, unknown>) => {
 };
 
 // ! for getting  user  post
-export const getUserPosts = async (token: string) => {
+export const getUserPosts = async (token: string, params?: Record<string, unknown> | undefined) => {
   try {
+
+ 
     const { data } = await axiosInstance.get("/api/v1/post/user-post", {
+    
+      
+    
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      params
+      
     });
 
     return data;
