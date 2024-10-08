@@ -11,7 +11,7 @@ type TBlogCardProps = {
 };
 
 const BlogCard = ({ blogData }: TBlogCardProps) => {
-  // console.log(blogData);
+  console.log(blogData);
 
   const [description, setDescription] = useState<string | null>(null);
 
@@ -46,6 +46,7 @@ const BlogCard = ({ blogData }: TBlogCardProps) => {
               ""
             )}
 
+
             {/* premium text content  */}
 
             {/* date container */}
@@ -69,6 +70,7 @@ const BlogCard = ({ blogData }: TBlogCardProps) => {
 
             <h2 className="mb-4 text-base font-bold text-gray-50 md:text-lg lg:text-2xl">
               {blogData?.title}
+              
             </h2>
 
             <p className="mb-4  text-gray-100 w-[98%] ">

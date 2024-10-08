@@ -52,10 +52,7 @@ const PostDetail = ({ params: { postId } }: IProps) => {
 
   // ! check if the user is subscribed
   useEffect(() => {
-    console.log("in use effect = ");
-    console.log(postDetail?.data?.isPremium);
-    console.log(user?.isVerified);
-
+   
     if (postDetail?.data?.isPremium && !user?.isVerified) {
       console.log("inside condition !!");
       toast.error("Subscribe for reading the post !!");

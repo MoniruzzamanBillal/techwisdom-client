@@ -19,11 +19,6 @@ const userProfileLinks: TUserProfile[] = [
   },
 
   {
-    label: "View Analytics",
-    link: "/profile",
-  },
-
-  {
     label: "My subscriptin",
     link: "/profile/user-subscription",
   },

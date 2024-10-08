@@ -5,14 +5,88 @@ import { CategoryFilter, SortFilter } from "@/components/ui/Module";
 import { useGetPosts } from "@/hooks/post.hook";
 import { TPostsResponse } from "@/types/Global.types";
 
-import { useState } from "react";
+import { useState ,useEffect } from "react";
 
 const Home = () => {
   const [type, setType] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sort, setSortBy] = useState("");
 
-  const { data: allPostData, isPending: blogsDataLoading } = useGetPosts();
+  const [params, setParams] = useState<Record<string, unknown> | undefined>(
+    undefined
+  );
 
-  // console.log(allPostData);
+  const { data: allPostData, isPending: blogsDataLoading } = useGetPosts(params);
+
+  console.log(allPostData);
+  // console.log(type);
+  // console.log(searchTerm);
+  // console.log(sort);
+  console.log(params);
+
+
+
+    //! Use effect to track param value
+    useEffect(() => {
+      const updateParam = () => {
+        const newParam: Record<string, unknown> = {};
+  
+        if (searchTerm) {
+          newParam.searchTerm = searchTerm;
+        }
+       
+      
+  
+        if (type) {
+          newParam.type = type;
+        }
+  
+        if (sort) {
+          newParam.sort = sort;
+        }
+  
+        setParams(newParam);
+      };
+  
+      updateParam();
+    }, [searchTerm,  type, sort]);
+
+
+
+
+    let content = null 
+
+
+
+    // * if no data 
+    if(allPostData?.data?.length < 1) {
+      content = (
+        <div className= "border border-gray-600 bg-black100 h-[62vh] w-[90vw] xl:w-[66vw]  flex  robotoFont mt-6 flex-col items-center justify-center   p-6 rounded-md shadow-md  ">
+        <h1 className=" text-3xl sm:text-4xl font-bold text-prime100 mb-4">
+          No post available for this category !!!
+        </h1>
+       
+  
+      
+      </div>
+      )
+    }
+    
+
+
+    if(allPostData?.data?.length ) {
+      content = (
+       <>
+       
+       {allPostData?.data &&
+          allPostData?.data?.map((item: TPostsResponse) => (
+            <BlogCard key={item?._id} blogData={item} />
+          ))}
+       </>
+      )
+    }
+
+  
 
   return (
     <div className="HomePageContainer pt-4 bg-black50 min-h-screen ">
@@ -20,7 +94,7 @@ const Home = () => {
         {/* search sort section starts  */}
 
         <div className="searchFilterSection mb-4 ">
-          <SortFilter />
+          <SortFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm} sort={sort} setSortBy={setSortBy} />
         </div>
 
         {/* search sort section ends  */}
@@ -40,10 +114,7 @@ const Home = () => {
             {blogsDataLoading &&
               [1, 2, 3].map((item, ind) => <BlogCardLoading key={ind} />)}
 
-            {allPostData?.data &&
-              allPostData?.data?.map((item: TPostsResponse) => (
-                <BlogCard key={item?._id} blogData={item} />
-              ))}
+           {content}
 
             {/*  */}
           </div>

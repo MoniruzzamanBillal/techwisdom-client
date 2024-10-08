@@ -29,10 +29,10 @@ export const useCreatePost = () => {
 };
 
 // ! for getting all post
-export const useGetPosts = () => {
+export const useGetPosts = (params?: Record<string, unknown>) => {
   return useQuery({
-    queryKey: ["get-all-posts"],
-    queryFn: async () => await getAllPosts(),
+    queryKey: ["get-all-posts" , params],
+    queryFn: async () => await getAllPosts(params),
   });
 };
 

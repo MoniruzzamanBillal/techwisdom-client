@@ -35,9 +35,11 @@ export const makePost = async ({
 };
 
 // ! for getting all post
-export const getAllPosts = async () => {
+export const getAllPosts = async (params?: Record<string, unknown>) => {
   try {
-    const { data } = await axiosInstance.get("/api/v1/post/all-post");
+    const { data } = await axiosInstance.get("/api/v1/post/all-post" , {
+      params,
+    });
 
     return data;
   } catch (error: any) {
