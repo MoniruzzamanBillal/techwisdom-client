@@ -44,3 +44,27 @@ export const getAllPayment = async () => {
     throw new Error(error.message || "Failed to fetch payment data");
   }
 };
+
+// ! for getting total revenue
+export const getTotalRevenue = async () => {
+  try {
+    const { data } = await axiosInstance.get("/api/v1/payment/payment-revenue");
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error.message || "Failed to fetch payment data");
+  }
+};
+
+// ! for getting renenue data for chart
+export const getPaymentChartData = async () => {
+  try {
+    const { data } = await axiosInstance.get("/api/v1/payment/payment-chart");
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error.message || "Failed to fetch payment data");
+  }
+};

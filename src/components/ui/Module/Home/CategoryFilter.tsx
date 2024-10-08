@@ -6,7 +6,12 @@ import { TResponseCategory } from "@/types/Global.types";
 import { useEffect, useState } from "react";
 import CategorySkeletonLoading from "../../CategorySkeletonLoading";
 
-const CategoryFilter = ({ type, setType }) => {
+type TCategoryFilterProps = {
+  type: string;
+  setType: (category: string) => void;
+};
+
+const CategoryFilter = ({ type, setType }: TCategoryFilterProps) => {
   const { data: allCategory, isPending: categoryDataLoading } =
     useGetCategories();
   const [categoryData, setCategoryData] = useState<TResponseCategory[]>([]);
@@ -41,7 +46,7 @@ const CategoryFilter = ({ type, setType }) => {
                       id={item?.cName}
                       type="radio"
                       value={item?._id}
-                      onChange={() => setType(item?._id)}
+                      onChange={() => setType(item?._id as string)}
                       checked={type === item?._id}
                       name="list-radio"
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"

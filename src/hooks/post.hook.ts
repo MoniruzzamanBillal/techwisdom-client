@@ -108,7 +108,7 @@ export const useGiveDownvote = () => {
     mutationKey: ["downvote-post"],
     mutationFn: async (payload: TUpvoteDownvote) => await giveDownVote(payload),
     onSuccess: () => {
-      toast.success("Upvote given successfully !!!");
+      toast.success("Downvote given successfully !!!");
     },
   });
 };

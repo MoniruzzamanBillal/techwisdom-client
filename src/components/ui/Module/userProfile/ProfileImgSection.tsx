@@ -3,13 +3,14 @@ import Image from "next/image";
 import { Button } from "../../button";
 import { Edit } from "lucide-react";
 import { useUserContext } from "@/context/user.provider";
+import Link from "next/link";
+import { MdVerifiedUser } from "react-icons/md";
 
 const ProfileImgSection = () => {
   const { user } = useUserContext();
 
-
-
-  
+  console.log("in profile image section = ", user);
+  // console.log(user?.followers?.length);
 
   return (
     <div className="ProfileImgSectionContainer   rounded-md ">
@@ -19,7 +20,6 @@ const ProfileImgSection = () => {
           {/* left image section starts  */}
           <div className="imgSection rounded-full overflow-auto w-[8rem] sm:w-[10rem] md:w-[12rem] xmd:w-[14rem] ">
             <Image
-              // src={`https://i.postimg.cc/TPMTptwT/ubaida.jpg  `}
               src={` ${
                 user?.profilePicture
                   ? user?.profilePicture
@@ -34,10 +34,25 @@ const ProfileImgSection = () => {
 
           {/* left name section starts  */}
           <div className="nameSection   ">
-            <p className=" text-xl sm:text-2xl font-semibold text-gray-50 mb-2 ">
-           {user?.name}
+            <div className="nameTopSection flex items-center gap-x-2 mb-2 ">
+              <p className=" text-xl sm:text-2xl font-semibold text-gray-50  ">
+                {user?.name}
+              </p>
+
+             
+
+
+              {
+user?.isVerified &&  <MdVerifiedUser className=" text-2xl text-prime50 " />
+              }
+
+
+            </div>
+            <p className=" font-medium text-gray-300  ">
+              {" "}
+              {user?.followers?.length &&
+                user?.followers?.length} Followers{" "}
             </p>
-            <p className=" font-medium text-gray-300  "> 10 Followers </p>
           </div>
           {/* left name section ends  */}
 
@@ -47,10 +62,12 @@ const ProfileImgSection = () => {
 
         {/* right section starts  */}
         <div className="profileRightSection  ">
-          <Button className=" bg-prime50 hover:bg-prime100  font-semibold ">
-            <Edit className=" mr-2 " />
-            Edit profile
-          </Button>
+          <Link href={`/update-admin/${user?._id}`}>
+            <Button className=" bg-prime50 hover:bg-prime100  font-semibold ">
+              <Edit className=" mr-2 " />
+              Edit profile
+            </Button>
+          </Link>
         </div>
         {/* right section ends  */}
 

@@ -12,6 +12,8 @@ const Home = () => {
 
   const { data: allPostData, isPending: blogsDataLoading } = useGetPosts();
 
+  // console.log(allPostData);
+
   return (
     <div className="HomePageContainer pt-4 bg-black50 min-h-screen ">
       <Wrapper className="homePageWrapper  ">

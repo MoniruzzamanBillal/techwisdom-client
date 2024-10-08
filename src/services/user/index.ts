@@ -125,3 +125,29 @@ export const deleteUser = async (id: string) => {
     throw new Error(error);
   }
 };
+
+// ! for getting total user number
+export const getTotalUserNumber = async () => {
+  try {
+    const { data } = await axiosInstance.get(`/api/v1/payment/user-number`);
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
+
+// ! for getting total subscriber number
+export const getTotalSubscriber = async () => {
+  try {
+    const { data } = await axiosInstance.get(
+      `/api/v1/payment/subscriber-number`
+    );
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};

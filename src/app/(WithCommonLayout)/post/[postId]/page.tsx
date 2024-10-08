@@ -16,10 +16,11 @@ import {
   useGiveDownvote,
 } from "@/hooks/post.hook";
 import { TComment } from "@/types/Global.types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { BiSolidLike, BiSolidDislike } from "react-icons/bi";
+import { useRouter } from "next/navigation";
 
 type IProps = {
   params: {
@@ -28,6 +29,7 @@ type IProps = {
 };
 
 const PostDetail = ({ params: { postId } }: IProps) => {
+  const router = useRouter();
   const { user } = useUserContext();
 
   const { mutateAsync: GiveUpvote } = useGiveUpvote();
@@ -45,7 +47,23 @@ const PostDetail = ({ params: { postId } }: IProps) => {
 
   const [comment, setComment] = useState<string | null>(null);
 
-  
+  // console.log(user);
+  // console.log(postDetail);
+
+  // ! check if the user is subscribed
+  useEffect(() => {
+    console.log("in use effect = ");
+    console.log(postDetail?.data?.isPremium);
+    console.log(user?.isVerified);
+
+    if (postDetail?.data?.isPremium && !user?.isVerified) {
+      console.log("inside condition !!");
+      toast.error("Subscribe for reading the post !!");
+      router.push("/");
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [postDetail, user]);
 
   // ! for giving upcote
   const handleGiveUpvote = async () => {

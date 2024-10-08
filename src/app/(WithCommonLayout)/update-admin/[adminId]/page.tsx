@@ -53,7 +53,7 @@ const UpdateAdmin = ({ params: { adminId } }: IProps) => {
       const result = await updateUser({ formData, userId: adminId });
 
       if (result?.success) {
-        router.push("/admin/manage-admin");
+        router.push("/");
       }
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

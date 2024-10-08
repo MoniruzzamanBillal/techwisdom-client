@@ -2,7 +2,9 @@
 import {
   confirmPayment,
   getAllPayment,
+  getPaymentChartData,
   getSubscriber,
+  getTotalRevenue,
 } from "@/services/payment";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -41,6 +43,26 @@ export const useGetPayment = () => {
     queryKey: ["get-paymentdata"],
     queryFn: async () => {
       return await getAllPayment();
+    },
+  });
+};
+
+// ! for getting total revenue
+export const useGetRevenue = () => {
+  return useQuery({
+    queryKey: ["get-revenue"],
+    queryFn: async () => {
+      return await getTotalRevenue();
+    },
+  });
+};
+
+// ! for getting payment chart data
+export const useGetChartRevenue = () => {
+  return useQuery({
+    queryKey: ["get-chart-revenue"],
+    queryFn: async () => {
+      return await getPaymentChartData();
     },
   });
 };

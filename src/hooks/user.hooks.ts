@@ -6,6 +6,8 @@ import {
   getAllUsers,
   getSingleUser,
   getSpecificUser,
+  getTotalSubscriber,
+  getTotalUserNumber,
   unblockUser,
   unfollowUser,
 } from "@/services/user";
@@ -118,6 +120,26 @@ export const useDeleteUser = () => {
     mutationFn: async (id: string) => await deleteUser(id),
     onSuccess: () => {
       toast.success("User deleted successfully !!!");
+    },
+  });
+};
+
+// ! for getting subscriber number
+export const useGetSubscriberNumber = () => {
+  return useQuery({
+    queryKey: ["get-subscriber-number"],
+    queryFn: async () => {
+      return await getTotalSubscriber();
+    },
+  });
+};
+
+// ! for getting user number
+export const useGetUserNumber = () => {
+  return useQuery({
+    queryKey: ["get-user-number"],
+    queryFn: async () => {
+      return await getTotalUserNumber();
     },
   });
 };

@@ -33,7 +33,7 @@ const adminProfileLinks: TUserProfile[] = [
 const AdminProfileMenu = () => {
   return (
     <div className="AdminProfileMenuContainer pt-3 ">
-      <Wrapper className=" adminProfileWrapper   p-6 bg-black100 ">
+      <Wrapper className=" adminProfileWrapper p-6 border border-gray-700 bg-black100 ">
         <ProfileImgSection />
 
         <Separator className="my-5 bg-gray-600 " />
