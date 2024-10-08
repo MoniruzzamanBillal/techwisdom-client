@@ -7,6 +7,7 @@ import {
   TableDataError,
   TableDataLoading,
 } from "@/components/ui";
+import { useGetPayment } from "@/hooks/payment.hook";
 import {
   useBlockUser,
   useDeleteUser,
@@ -27,8 +28,6 @@ const ManageUser = () => {
   const { mutateAsync: blockUser } = useBlockUser();
   const { mutateAsync: unblockUser } = useUnblockUser();
   const { mutateAsync: deleteUser } = useDeleteUser();
-
-  // console.log(allUserData?.data);
 
   // ! for block user
   const handleBlockUser = async (userId: string) => {

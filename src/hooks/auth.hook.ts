@@ -1,4 +1,9 @@
-import { adminRegister, loginUser, updateUser } from "@/services/AuthService";
+import {
+  adminRegister,
+  loginUser,
+  updateUser,
+  userRegister,
+} from "@/services/AuthService";
 import { useMutation } from "@tanstack/react-query";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
@@ -24,6 +29,17 @@ export const useAdminRegistration = () => {
     mutationFn: async (formData: FormData) => await adminRegister({ formData }),
     onSuccess: () => {
       toast.success("Admin registered successfully !!!");
+    },
+  });
+};
+
+// ! for registering user
+export const useUserRegistration = () => {
+  return useMutation({
+    mutationKey: ["user-register"],
+    mutationFn: async (formData: FormData) => await userRegister({ formData }),
+    onSuccess: () => {
+      toast.success("User registered successfully !!!");
     },
   });
 };

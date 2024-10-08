@@ -36,6 +36,26 @@ export const adminRegister = async ({ formData }: { formData: FormData }) => {
   }
 };
 
+// ! for registering user
+export const userRegister = async ({ formData }: { formData: FormData }) => {
+  try {
+    const { data } = await axiosInstance.post(
+      "/api/v1/auth/register",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
+
 type TUpdateProps = {
   formData: FormData;
   userId: string;

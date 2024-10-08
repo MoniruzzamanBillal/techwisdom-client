@@ -27,11 +27,11 @@ const PaymentConfirm = ({ params: { userId } }: IProps) => {
     getUserInfo();
   }, [userId, handleSetUser]);
 
-  //   ! after 5 second , redirect to the profile page
+  //   ! after 2 second , redirect to the profile page
   useEffect(() => {
     const timer = setTimeout(() => {
       router.push("/profile/user-subscription");
-    }, 3000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, [router]);

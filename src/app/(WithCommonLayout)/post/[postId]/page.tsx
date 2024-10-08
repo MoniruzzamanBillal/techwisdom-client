@@ -45,8 +45,7 @@ const PostDetail = ({ params: { postId } }: IProps) => {
 
   const [comment, setComment] = useState<string | null>(null);
 
-  console.log(postDetail?.data);
-  // console.log(user);
+  
 
   // ! for giving upcote
   const handleGiveUpvote = async () => {

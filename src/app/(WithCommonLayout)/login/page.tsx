@@ -104,7 +104,7 @@ const Login = () => {
             <p className="right-0 inline-block text-sm font-semibold align-baseline text-gray-900 hover:text-gray-950 dark:text-gray-200  ">
               Dont have any account ?{" "}
               <span className=" text-blue-700 font-bold cursor-pointer ">
-                <Link href={`/sign-up`}>Sign up </Link>
+                <Link href={`/register`}>Sign up </Link>
               </span>
             </p>
           </div>

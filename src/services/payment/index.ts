@@ -33,3 +33,14 @@ export const getSubscriber = async (id: string) => {
     throw new Error(error);
   }
 };
+
+// ! for getting all payment data
+export const getAllPayment = async () => {
+  try {
+    const { data } = await axiosInstance.get(`/api/v1/payment/payment-data`);
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error.message || "Failed to fetch payment data");
+  }
+};
