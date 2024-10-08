@@ -1,6 +1,8 @@
 import {
   adminRegister,
   loginUser,
+  resetPassword,
+  sendEmailForReset,
   updateUser,
   userRegister,
 } from "@/services/AuthService";
@@ -60,3 +62,34 @@ export const useUserUpdate = () => {
     },
   });
 };
+
+
+
+
+// ! for sending email for reset 
+export const useSendResetReq = ()=>{
+  return useMutation({
+    mutationKey: ["send-email-req"], 
+
+    mutationFn : async(email : string ) => await sendEmailForReset(email) 
+
+
+  })
+}
+
+
+type TResetPassword = {
+  userId : string 
+  password : string
+}
+
+// ! for reseting password 
+export const useResetPassword = ()=>{
+  return useMutation({
+    mutationKey: ["reset-password"], 
+
+    mutationFn : async(payload : TResetPassword ) => await resetPassword(payload) 
+
+
+  })
+}

@@ -2,10 +2,17 @@
 
 import { TechWisdomForm, TechWisdomInput } from "@/components/form"
 import Wrapper from "@/components/shared/Wrapper"
+import { FormSubmitLoading } from "@/components/ui"
 import { Button } from "@/components/ui/button"
+import { useResetPassword } from "@/hooks/auth.hook"
+import { TUserToken } from "@/types/Global.types"
+import { verifyToken } from "@/utils/verify.token"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter } from "next/navigation"
 import { FieldValues } from "react-hook-form"
 import { z } from "zod"
+import { toast } from "sonner";
+
 
 type IProps = {
     params : {
@@ -16,19 +23,42 @@ type IProps = {
 
 const ResetPassword = ({params : { token}} : IProps  )=>{
 
+  const router = useRouter()
 
-    console.log("token = " , token )
+  const { mutateAsync:resetPassword ,  isPending } = useResetPassword()
+
+
+    // console.log("token = " , token )
 
 
 
     // ! for reseting password 
 
-    const handleResetPassword = (data : FieldValues) =>{
-
+    const handleResetPassword = async (data : FieldValues) =>{
+      const { password } = data;
+      const verifyTokenData = verifyToken(token as string) as TUserToken
+      const { userId } = verifyTokenData;
 
         try {
 
-            console.log(data)
+         
+            const payload = {
+              userId,
+              password,
+            };
+        
+            console.log(payload);
+
+            const result = await resetPassword(payload);
+
+
+             
+        if(result?.success){
+          router.push(`/login`)
+          toast.success("Password reset successfully !!")
+        }
+
+
             
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error : any ) {
@@ -44,6 +74,12 @@ const ResetPassword = ({params : { token}} : IProps  )=>{
 
     return (
         <div className="ResetPasswordContainer w-full min-h-screen  imageCenter  bg-black50 flex items-center justify-center">
+
+{
+          isPending && <FormSubmitLoading />
+        }
+
+
         <Wrapper className="ResetPasswordWrapper py-14">
           {/*  */}
           <div className=" w-[95%] xsm:w-[85%] sm:w-[78%] md:w-[70%] xmd:w-[65%] lg:w-[55%] m-auto p-3 xsm:p-5 sm:p-7 md:p-10  rounded-md shadow-xl border border-gray-700 bg-black100 backdrop-blur  ">
@@ -85,23 +121,18 @@ const ResetPassword = ({params : { token}} : IProps  )=>{
                 placeholder="Confirm your password "
               />
   
-              {/* <Button
-                disabled={isLoading}
+              <Button
+                disabled={isPending}
                 className={`px-3 xsm:px-4 sm:px-5 md:px-6 font-semibold text-xs sm:text-sm md:text-base active:scale-95 duration-500 ${
-                  isLoading
+                  isPending
                     ? " cursor-not-allowed bg-gray-600 "
                     : "bg-prime50 hover:bg-prime100  "
                 } `}
               >
                 Reset Password
-              </Button> */}
-  
-              <Button
-             
-                className={`px-3 xsm:px-4 sm:px-5 md:px-6 font-semibold text-xs sm:text-sm md:text-base active:scale-95 duration-500 `}
-              >
-                Reset Password
               </Button>
+  
+         
 
 
 

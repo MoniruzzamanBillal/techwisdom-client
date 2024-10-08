@@ -80,3 +80,39 @@ export const updateUser = async ({ formData, userId }: TUpdateProps) => {
     throw new Error(error);
   }
 };
+
+
+// ! for sending reset email request 
+export const sendEmailForReset = async(email : string )=>{
+  try{
+
+    const {data } =  await axiosInstance.patch(`/api/v1/auth/reset-link/${email}`)
+
+
+    return data 
+  }
+  catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+}
+
+
+type TResetPassword = {
+  userId : string 
+  password : string
+}
+// ! for reseting password 
+export const resetPassword = async(payload : TResetPassword )=>{
+  try {
+
+    const {data } =  await axiosInstance.patch(`/api/v1/auth/reset-password` , payload )
+
+
+    return data 
+    
+  }  catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+}
