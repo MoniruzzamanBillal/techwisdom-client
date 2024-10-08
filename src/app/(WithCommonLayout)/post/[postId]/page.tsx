@@ -30,11 +30,9 @@ type IProps = {
 const PostDetail = ({ params: { postId } }: IProps) => {
   const { user } = useUserContext();
 
-  const { mutateAsync: GiveUpvote, isPending: upvoteGivingPending } =
-    useGiveUpvote();
+  const { mutateAsync: GiveUpvote } = useGiveUpvote();
 
-  const { mutateAsync: GiveDownvote, isPending: downvoteGivingPending } =
-    useGiveDownvote();
+  const { mutateAsync: GiveDownvote } = useGiveDownvote();
 
   const {
     data: postDetail,
@@ -47,19 +45,22 @@ const PostDetail = ({ params: { postId } }: IProps) => {
 
   const [comment, setComment] = useState<string | null>(null);
 
-  // console.log(postDetail?.data);
+  console.log(postDetail?.data);
+  // console.log(user);
 
   // ! for giving upcote
   const handleGiveUpvote = async () => {
     try {
-      console.log("giving upvote!!!");
-
       const payload = {
         postId: postDetail?.data?._id,
-        userId: user?._id,
+        userId: user?._id as string,
       };
 
-      console.log(payload);
+      const result = await GiveUpvote(payload);
+
+      if (result?.success) {
+        postDetailRefetch();
+      }
     } catch (error: any) {
       toast.error("Something went wrong while upvoting !!");
       console.log(error);
@@ -69,13 +70,16 @@ const PostDetail = ({ params: { postId } }: IProps) => {
   // ! for giving downvote
   const handleGiveDownvote = async () => {
     try {
-      console.log("giving Downvote!!!");
       const payload = {
         postId: postDetail?.data?._id,
-        userId: user?._id,
+        userId: user?._id as string,
       };
 
-      console.log(payload);
+      const result = await GiveDownvote(payload);
+
+      if (result?.success) {
+        postDetailRefetch();
+      }
     } catch (error: any) {
       toast.error("Something went wrong while downvoting !!");
       console.log(error);
@@ -123,28 +127,39 @@ const PostDetail = ({ params: { postId } }: IProps) => {
         <PostDetailCard postData={postDetail?.data} />
 
         {/* upvote downvote section  */}
-        <div className="upvoteDownvoteContainer py-2 mt-3 flex flex-col gap-y-3 border-y border-gray-500  ">
-          {/*  */}
-          <div className="upvoteContainer flex items-center gap-x-2 text-2xl ">
-            <p>Give Upvote : </p>
+        {postDetail?.data?.authorId?._id !== user?._id && (
+          <div className="upvoteDownvoteContainer py-4 mt-2 flex flex-col gap-y-3 border-y border-gray-600  ">
+            {/*  */}
+            <div className="upvoteContainer flex items-center gap-x-2 text-2xl ">
+              <p>Give Upvote : </p>
 
-            <BiSolidLike
-              onClick={handleGiveUpvote}
-              className=" text-3xl text-prime100 cursor-pointer "
-            />
+              {postDetail?.data?.upvotedBy?.includes(user?._id) ? (
+                <BiSolidLike className=" text-3xl text-gray-500 cursor-pointer " />
+              ) : (
+                <BiSolidLike
+                  onClick={handleGiveUpvote}
+                  className=" text-3xl text-prime100 cursor-pointer "
+                />
+              )}
+            </div>
+            {/*  */}
+
+            <div className="downVoteContainer  flex items-center gap-x-2 text-2xl ">
+              <p>Give Downvote : </p>
+
+              {postDetail?.data?.downvotedBy?.includes(user?._id) ? (
+                <BiSolidDislike className=" text-3xl text-gray-500 cursor-pointer " />
+              ) : (
+                <BiSolidDislike
+                  onClick={handleGiveDownvote}
+                  className=" text-3xl text-prime100 cursor-pointer "
+                />
+              )}
+            </div>
           </div>
-          {/*  */}
+        )}
 
-          <div className="downVoteContainer  flex items-center gap-x-2 text-2xl ">
-            <p>Give Downvote : </p>
-
-            <BiSolidDislike
-              onClick={handleGiveDownvote}
-              className=" text-3xl text-prime100 cursor-pointer "
-            />
-          </div>
-        </div>
-        {/* upvote downvote section  */}
+        {/* upvote downvote section  ends  */}
 
         <h1 className=" font-semibold text-2xl mb-3 mt-6 ">Comments </h1>
 
