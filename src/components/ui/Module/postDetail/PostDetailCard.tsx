@@ -121,8 +121,10 @@ const PostDetailCard = ({ postData }: IProps) => {
 
           {/* writer info ends */}
 
-          {/* edit button starts  */}
-          <div className="editContainer mt-7  ">
+          {/* top button starts  */}
+
+          {
+            user &&  <div className="editContainer mt-7  ">
             {postData?.authorId?._id === user?._id ? (
               <Link
                 href={`/update-post/${postData?._id}`}
@@ -156,7 +158,13 @@ const PostDetailCard = ({ postData }: IProps) => {
               </div>
             )}
           </div>
-          {/* edit button ends  */}
+          }
+
+         
+          {/* top button ends  */}
+
+
+
         </div>
         {/* left side section ends  */}
 

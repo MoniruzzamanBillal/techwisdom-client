@@ -48,7 +48,11 @@ user?.isVerified &&  <MdVerifiedUser className=" text-2xl text-prime50 " />
 
 
             </div>
-            <p className=" font-medium text-gray-300  ">
+
+
+<p className=" text-sm font-medium text-gray-400 mb-2 " >  {user?.email} </p>
+
+            <p className=" font-medium text-gray-300  " >
               {" "}
               {user?.followers?.length &&
                 user?.followers?.length} Followers{" "}

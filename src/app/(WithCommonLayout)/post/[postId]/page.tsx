@@ -53,8 +53,8 @@ const PostDetail = ({ params: { postId } } : IProps) => {
   // ! check if the user is subscribed
   useEffect(() => {
    
-    if (postDetail?.data?.isPremium && !user?.isVerified) {
-      console.log("inside condition !!");
+    if (postDetail?.data?.isPremium && !user?.isVerified && !(user?.userRole === "admin" || postDetail?.data?.authorId?._id === user?._id) ) {
+     
       toast.error("Subscribe for reading the post !!");
       router.push("/");
     }
@@ -140,53 +140,78 @@ const PostDetail = ({ params: { postId } } : IProps) => {
       <div className="postDataContainer p-6  rounded-md shadow-md text-white flex flex-col gap-y-3 ">
         <PostDetailCard postData={postDetail?.data} />
 
-        {/* upvote downvote section  */}
-        {postDetail?.data?.authorId?._id !== user?._id && (
-          <div className="upvoteDownvoteContainer py-4 mt-2 flex flex-col gap-y-3 border-y border-gray-600  ">
-            {/*  */}
-            <div className="upvoteContainer flex items-center gap-x-2 text-2xl ">
-              <p>Give Upvote : </p>
+        {/* upvote downvote section starts  */}
 
-              {postDetail?.data?.upvotedBy?.includes(user?._id) ? (
-                <BiSolidLike className=" text-3xl text-gray-500 cursor-pointer " />
-              ) : (
-                <BiSolidLike
-                  onClick={handleGiveUpvote}
-                  className=" text-3xl text-prime100 cursor-pointer "
-                />
-              )}
+
+{
+  user && <div className="voteContainer">
+
+  {postDetail?.data?.authorId?._id !== user?._id && (
+            <div className="upvoteDownvoteContainer py-4 mt-2 flex flex-col gap-y-3 border-y border-gray-600  ">
+              {/*  */}
+              <div className="upvoteContainer flex items-center gap-x-2 text-2xl ">
+                <p>Give Upvote : </p>
+  
+                {postDetail?.data?.upvotedBy?.includes(user?._id) ? (
+                  <BiSolidLike className=" text-3xl text-gray-500 cursor-pointer " />
+                ) : (
+                  <BiSolidLike
+                    onClick={handleGiveUpvote}
+                    className=" text-3xl text-prime100 cursor-pointer "
+                  />
+                )}
+              </div>
+              {/*  */}
+  
+              <div className="downVoteContainer  flex items-center gap-x-2 text-2xl ">
+                <p>Give Downvote : </p>
+  
+                {postDetail?.data?.downvotedBy?.includes(user?._id) ? (
+                  <BiSolidDislike className=" text-3xl text-gray-500 cursor-pointer " />
+                ) : (
+                  <BiSolidDislike
+                    onClick={handleGiveDownvote}
+                    className=" text-3xl text-prime100 cursor-pointer "
+                  />
+                )}
+              </div>
             </div>
-            {/*  */}
+          )}
+  
+  
+  </div>
+  
+}
 
-            <div className="downVoteContainer  flex items-center gap-x-2 text-2xl ">
-              <p>Give Downvote : </p>
 
-              {postDetail?.data?.downvotedBy?.includes(user?._id) ? (
-                <BiSolidDislike className=" text-3xl text-gray-500 cursor-pointer " />
-              ) : (
-                <BiSolidDislike
-                  onClick={handleGiveDownvote}
-                  className=" text-3xl text-prime100 cursor-pointer "
-                />
-              )}
-            </div>
-          </div>
-        )}
+      
 
         {/* upvote downvote section  ends  */}
 
+
+       
+
         <h1 className=" font-semibold text-2xl mb-3 mt-6 ">Comments </h1>
 
-        {postDetail?.data?.authorId?._id === user?._id ? (
-          " "
-        ) : (
-          <Comment
-            comment={comment}
-            setComment={setComment}
-            handleAddComment={handleAddComment}
-          />
-        )}
 
+{
+  user &&  <div className="commentInputContainer">
+  {postDetail?.data?.authorId?._id === user?._id ? (
+    " "
+  ) : (
+    <Comment
+      comment={comment}
+      setComment={setComment}
+      handleAddComment={handleAddComment}
+    />
+  )}
+
+
+  </div>
+}
+
+       
+       
         {postDetail?.data?.comments &&
           postDetail?.data?.comments?.map((commentData: TComment) => (
             <UserCommentCard
