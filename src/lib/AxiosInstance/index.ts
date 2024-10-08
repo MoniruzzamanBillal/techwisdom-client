@@ -3,6 +3,7 @@ import axios from "axios";
 const axiosInstance = axios.create({
   // baseURL: envConfig.baseApi,
   baseURL: "http://localhost:5000",
+  // baseURL: "https://techwisdom-server.vercel.app",
 });
 
 // ! Add a request interceptor

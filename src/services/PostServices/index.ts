@@ -1,9 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import envConfig from "@/config/envConfig";
+
 import axiosInstance from "@/lib/AxiosInstance";
 import axios from "axios";
+
+
+  
+const baseUrl = 'http://localhost:5000'
+// const  baseUrl = 'https://techwisdom-server.vercel.app'
 
 interface PostPayload {
   formdata: FormData;
@@ -17,7 +22,7 @@ export const makePost = async ({
 }: PostPayload): Promise<any> => {
   try {
     const { data } = await axios.post(
-      `${envConfig.baseApi}/api/v1/post/create-post`,
+      `${baseUrl}/api/v1/post/create-post`,
       formdata,
       {
         headers: {

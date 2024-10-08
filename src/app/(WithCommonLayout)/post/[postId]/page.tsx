@@ -28,7 +28,7 @@ type IProps = {
   };
 };
 
-const PostDetail = ({ params: { postId } }: IProps) => {
+const PostDetail = ({ params: { postId } } : IProps) => {
   const router = useRouter();
   const { user } = useUserContext();
 

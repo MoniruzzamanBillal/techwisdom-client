@@ -95,7 +95,7 @@ const Login = () => {
           {/* form ends */}
 
           <div className="forgotPassword  mt-2  font-semibold underline cursor-pointer text-blue-800 dark:text-blue-500  ">
-            <Link href={"/forgotPassword"}>forgot password</Link>
+            <Link href={"/forgot-password"}>forgot password</Link>
           </div>
 
           {/*  */}
