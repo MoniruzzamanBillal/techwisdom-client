@@ -3,6 +3,7 @@ import Wrapper from "@/components/shared/Wrapper";
 import { BlogCard, BlogCardLoading } from "@/components/ui";
 import { CategoryFilter, SortFilter } from "@/components/ui/Module";
 import { useGetPosts } from "@/hooks/post.hook";
+import useDebounce from "@/hooks/UseDebounceHook";
 import { TPostsResponse } from "@/types/Global.types";
 
 import { useState ,useEffect } from "react";
@@ -11,6 +12,8 @@ const Home = () => {
   const [type, setType] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [sort, setSortBy] = useState("");
+
+  const debounceTerm = useDebounce(searchTerm , 500 ) 
 
   const [params, setParams] = useState<Record<string, unknown> | undefined>(
     undefined
@@ -22,7 +25,8 @@ const Home = () => {
   // console.log(type);
   // console.log(searchTerm);
   // console.log(sort);
-  console.log(params);
+  // console.log( 'debounce = ' ,  debounceTerm);
+  // console.log(params);
 
 
 
@@ -31,8 +35,10 @@ const Home = () => {
       const updateParam = () => {
         const newParam: Record<string, unknown> = {};
   
-        if (searchTerm) {
-          newParam.searchTerm = searchTerm;
+        
+       
+        if (debounceTerm) {
+          newParam.searchTerm = debounceTerm;
         }
        
       
@@ -49,7 +55,7 @@ const Home = () => {
       };
   
       updateParam();
-    }, [searchTerm,  type, sort]);
+    }, [ debounceTerm ,  type, sort]);
 
 
 
@@ -63,7 +69,7 @@ const Home = () => {
       content = (
         <div className= "border border-gray-600 bg-black100 h-[62vh] w-[90vw] xl:w-[66vw]  flex  robotoFont mt-6 flex-col items-center justify-center   p-6 rounded-md shadow-md  ">
         <h1 className=" text-3xl sm:text-4xl font-bold text-prime100 mb-4">
-          No post available for this category !!!
+          No post available  !!!
         </h1>
        
   

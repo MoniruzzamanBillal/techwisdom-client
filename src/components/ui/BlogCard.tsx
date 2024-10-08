@@ -11,7 +11,7 @@ type TBlogCardProps = {
 };
 
 const BlogCard = ({ blogData }: TBlogCardProps) => {
-  console.log(blogData);
+  // console.log(blogData);
 
   const [description, setDescription] = useState<string | null>(null);
 
