@@ -12,6 +12,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useUserContext } from "@/context/user.provider";
 import { FormSubmitLoading } from "@/components/ui";
 import { useEffect, Suspense } from "react";
+import { toast } from "sonner";
 
 const Login = () => {
   const searchParams = useSearchParams();
@@ -33,9 +34,16 @@ const Login = () => {
 
       setIsLoading(false);
 
+      console.log(response)
+
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      console.error("Login failed:", error.message);
+      
+    toast.error( error?.message)
+      
+
+      
       setIsLoading(false);
     }
   };

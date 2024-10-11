@@ -87,6 +87,14 @@ const CreatePost = () => {
 
   // console.log(allCategory?.data);
 
+  useEffect(() => {
+    if (!user) {
+      toast.error("Login for creating a post !!");
+      router.push("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
   // ! for setting up category option
   useEffect(() => {
     if (allCategory?.data) {
@@ -159,10 +167,7 @@ const CreatePost = () => {
 
       console.log(result);
 
-    
-
       router.push("/");
-
     } catch (error) {
       toast.error("Somethng went wrong while creating post ", {
         duration: 1400,
@@ -193,15 +198,15 @@ const CreatePost = () => {
           {/* category container  */}
 
           <div className="premiumContentContainer  mb-5 text-gray-50 flex  items-center gap-x-4 ">
-            <h1>premium content : </h1>
+            <h1 className="  ">premium content : </h1>
 
             <div className="inputContainer   ">
               <RadioGroup
-                className=" flex items-center gap-x-6 text-2xl "
+                className=" flex items-center gap-x-6 text-xl sm:text-2xl "
                 value={premiumContent}
                 onValueChange={setPremiumContent}
               >
-                <div className="flex items-center space-x-2 text-2xl ">
+                <div className="flex items-center space-x-2 text-xl sm:text-2xl ">
                   <RadioGroupItem
                     className={`size-6 border border-gray-200 ${
                       premiumContent === "true" ? "bg-prime50" : ""
@@ -209,7 +214,7 @@ const CreatePost = () => {
                     value="true"
                     id="r2"
                   />
-                  <Label className=" text-xl " htmlFor="r2">
+                  <Label className=" text-lg sm:text-xl " htmlFor="r2">
                     True
                   </Label>
                 </div>
@@ -221,7 +226,7 @@ const CreatePost = () => {
                     value="false"
                     id="r3"
                   />
-                  <Label className=" text-xl " htmlFor="r3">
+                  <Label className=" text-lg sm:text-xl " htmlFor="r3">
                     False
                   </Label>
                 </div>
@@ -246,7 +251,7 @@ const CreatePost = () => {
           {/* title starts  */}
           <div className="titleContainer   mb-3  ">
             <input
-              className=" block w-full py-2 px-3 text-2xl border-none outline-none rounded-md  bg-[#6b7280]  text-white  "
+              className=" block w-full py-2 px-3 text-xl xsm:text-2xl border-none outline-none rounded-md  bg-[#6b7280]  text-white  "
               type="text"
               placeholder="Title"
               onChange={(e) => setTitle(e.target.value)}
@@ -304,12 +309,12 @@ const CreatePost = () => {
   }
 
   return (
-    <div className="cratePostContainer py-3 bg-black50   ">
+    <div className="cratePostContainer py-5   bg-black50   ">
       {postCreatiionPending && <FormSubmitLoading />}
       <Wrapper className="createPostWrapper  flex justify-center items-center  ">
         {/* add post form  */}
-        <div className="    w-[95%] xsm:w-[90%] m-auto p-3 xsm:p-5 sm:p-7 md:p-10  rounded-md shadow-xl bg-prime100/20  backdrop-blur  ">
-          <p className=" mb-3 xsm:mb-5 sm:mb-8 text-xl xsm:text-2xl sm:text-3xl text-center font-semibold CormorantFont text-white  ">
+        <div className="  border border-gray-600 w-full sm:w-[95%] md:w-[90%] m-auto p-3 xsm:p-5 sm:p-7 md:p-10  rounded-md shadow-xl bg-prime100/20  backdrop-blur  ">
+          <p className=" mb-3 xsm:mb-5 sm:mb-8 text-2xl sm:text-3xl text-center font-semibold CormorantFont text-white  ">
             Create post
           </p>
 

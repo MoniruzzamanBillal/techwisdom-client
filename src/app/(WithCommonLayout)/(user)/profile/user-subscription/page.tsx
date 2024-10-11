@@ -21,7 +21,7 @@ const UserScribtion = () => {
 
   return (
     <div className="userSubscriptionContainer pt-4 ">
-      <Wrapper className=" userSubscriptionWrapper p-6 bg-black100 rounded-md text-white shadow-md  ">
+      <Wrapper className=" userSubscriptionWrapper p-6 border border-gray-600 bg-black100 rounded-md text-white shadow-md  ">
         {content}
       </Wrapper>
     </div>

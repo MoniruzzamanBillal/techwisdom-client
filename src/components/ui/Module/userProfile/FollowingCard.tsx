@@ -44,7 +44,7 @@ const FollowingCard = ({ _id, name, profilePicture, userId }: TProps) => {
 
   return (
     <div className="FollowingCardContainer my-4 ">
-      <div className="FollowingCardWrapper w-[96%]  xsm:w-[92%] sm:w-[85%] md:w-[76%] xmd:w-[70%] xl:w-[62%] xlm:w-[55%] m-auto bg-black50 rounded-md p-2 ">
+      <div className="FollowingCardWrapper w-[96%]  xsm:w-[92%] sm:w-[85%] md:w-[76%] xmd:w-[70%] xl:w-[62%] xlm:w-[55%] m-auto border border-gray-600 bg-black50 rounded-md p-2 ">
         <div className="followingContainer flex justify-between items-center  ">
           {/* left side container  */}
           <div className="leftSection  flex justify-between items-center gap-x-2 ">

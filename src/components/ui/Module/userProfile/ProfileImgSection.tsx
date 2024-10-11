@@ -12,6 +12,7 @@ const ProfileImgSection = () => {
   // console.log("in profile image section = ", user);
   // console.log(user?.followers?.length);
 
+
   return (
     <div className="ProfileImgSectionContainer   rounded-md ">
       <div className="profileImgWrapper flex flex-col xsm:flex-row justify-between items-center gap-y-8 ">
@@ -19,16 +20,18 @@ const ProfileImgSection = () => {
         <div className="profileLeftSection  flex  items-center gap-x-5 ">
           {/* left image section starts  */}
           <div className="imgSection rounded-full overflow-auto w-[8rem] sm:w-[10rem] md:w-[12rem] xmd:w-[14rem] ">
-            <Image
-              src={` ${
-                user?.profilePicture
-                  ? user?.profilePicture
-                  : "https://i.postimg.cc/TPMTptwT/ubaida.jpg"
-              }  `}
-              alt="progileImage"
-              height={700}
-              width={700}
-            />
+
+          {
+
+user?.profilePicture && <Image
+src={user?.profilePicture}
+alt="progileImage"
+height={700}
+width={700}
+/>
+
+          }
+            
           </div>
           {/* left image section ends */}
 
@@ -67,7 +70,7 @@ user?.isVerified &&  <MdVerifiedUser className=" text-2xl text-prime50 " />
         {/* right section starts  */}
         <div className="profileRightSection  ">
           <Link href={`/update-admin/${user?._id}`}>
-            <Button className=" bg-prime50 hover:bg-prime100  font-semibold ">
+            <Button className=" bg-prime50 hover:bg-prime100  font-semibold text-sm sm:text-base  ">
               <Edit className=" mr-2 " />
               Edit profile
             </Button>

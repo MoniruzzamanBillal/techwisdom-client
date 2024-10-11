@@ -12,3 +12,7 @@ export { default as AdminDeleteModal } from "./AdminDeleteModal";
 export { default as StatisticsCard } from "./StatisticsCard";
 export { default as Statistics } from "./Statistics";
 export { default as SellChart } from "./SellChart";
+export { default as MissionVisionCard } from "./MissionVisionCard";
+export { default as WhatWeOffer } from "./WhatWeOffer";
+export { default as TeamCard } from "./TeamCard";
+export { default as MapContainer } from "./MapContainer";

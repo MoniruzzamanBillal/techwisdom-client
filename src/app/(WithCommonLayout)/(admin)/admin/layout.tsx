@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 
 const layout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="layoutContainer bg-black50 min-h-screen ">
+    <div className="layoutContainer py-6 bg-black50 min-h-screen ">
       <div className="layoutSidebar   ">
         <AdminProfileMenu />
       </div>

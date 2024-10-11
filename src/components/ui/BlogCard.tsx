@@ -34,7 +34,7 @@ const BlogCard = ({ blogData }: TBlogCardProps) => {
   return (
     <div className="BlogCardContainer my-4 ">
       <div className="blogCardWrapper  ">
-        <div className="relative rounded-md bg-black100  p-5 pt-8 flex flex-col  md:flex-row   justify-between items-center gap-x-3 gap-y-8 shadow  ">
+        <div className="relative rounded-md border border-gray-700 bg-black100  p-5 pt-8 flex flex-col  md:flex-row   justify-between items-center gap-x-3 gap-y-8 shadow  ">
           {/* card left section starts  */}
           <div className="cardLeft  w-full md:w-[70%] text-white ">
             {/* premium text content  */}

@@ -81,7 +81,7 @@ const PostDetailCard = ({ postData }: IProps) => {
       <div className="detailTopSection  flex flex-col xmd:flex-row justify-between items-center gap-x-4 gap-y-8 mb-14 ">
         {/* left side section starts  */}
         <div className="topLeftSection  w-full xsm:w-[94%]  xmd:w-[60%] ">
-          <h1 className="  font-bold text-xl  sm:text-2xl xmd:text-3xl mb-3 leading-relaxed  ">
+          <h1 className="  font-bold text-xl  sm:text-2xl xl:text-3xl mb-3 leading-relaxed  ">
             {postData?.title}
           </h1>
 

@@ -62,3 +62,14 @@ export type TComment = {
   updatedAt?: string;
   __v?: number;
 };
+
+
+
+export type TMissionVisionItem = {
+  id: number;
+  header: string;
+  content: string;
+  img: string;
+};
+
+

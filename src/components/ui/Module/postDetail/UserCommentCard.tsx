@@ -77,7 +77,7 @@ const UserCommentCard = ({ commentData, postId }: TProps) => {
   // console.log(commentData);
 
   return (
-    <div className="UserCommentCardContainer  my-3 p-3 rounded-md bg-black50  ">
+    <div className="UserCommentCardContainer  my-3 p-3 rounded-md border border-gray-700 bg-black50  ">
       <div className="UserCommentWrapper   ">
         {/* writer info starts  */}
         <div className="writerInfo  flex items-center gap-2 mb-2  ">

@@ -7,8 +7,8 @@ import axios from "axios";
 
 
   
-const baseUrl = 'http://localhost:5000'
-// const  baseUrl = 'https://techwisdom-server.vercel.app'
+// const baseUrl = 'http://localhost:5000'
+const  baseUrl = 'https://techwisdom-server.vercel.app'
 
 interface PostPayload {
   formdata: FormData;

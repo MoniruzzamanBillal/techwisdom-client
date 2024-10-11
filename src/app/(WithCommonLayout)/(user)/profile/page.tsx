@@ -119,7 +119,7 @@ const UserProfile = () => {
           {/* left side filter section ends  */}
 
           {/* right section starts  */}
-          <div className="contentSection   w-[84%] ">{content}</div>
+          <div className="contentSection   w-[100%] xl:w-[84%] ">{content}</div>
           {/* right section ends  */}
         </div>
         {/* main body part ends  */}

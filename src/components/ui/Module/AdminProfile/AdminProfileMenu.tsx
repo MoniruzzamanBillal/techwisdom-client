@@ -44,7 +44,7 @@ const AdminProfileMenu = () => {
                 key={ind}
                 className="userProfileLinks flex  items-center space-x-2 xsm:space-x-4 text-xs xsm:text-sm sm:text-base "
               >
-                <Link href={`${item?.link}`} className=" pl-2 xsm:pl-4 ">
+                <Link href={`${item?.link}`} className=" text-xs sm:text-sm md:text-base  pl-2 xsm:pl-4 ">
                   {item?.label}
                 </Link>
                 <Separator

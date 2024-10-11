@@ -26,6 +26,8 @@ import { toast } from "sonner";
 const Links = [
   { name: "Home", link: "/" },
   { name: "Create Post", link: "/create-post" },
+  { name: "About us", link: "/About-us" },
+  { name: "Contact us", link: "/contact-us" },
 ];
 
 const Navbar = () => {
@@ -46,7 +48,7 @@ const Navbar = () => {
 
   return (
     <div
-      className="  shadow-md w-full fixed top-0 left-0 z-10  "
+      className="  shadow-md w-full fixed top-0 left-0 z-10 print:hidden   "
       style={{
         backdropFilter: "blur(8px)",
       }}
@@ -64,17 +66,76 @@ const Navbar = () => {
                 width={700}
               />
 
-              <p className="  text-2xl sm:text-2xl md:text-xl lg:text-3xl font-bold font-headingFont text-prime50 ">
+              <p className=" text-xl xsm:text-2xl  md:text-xl lg:text-3xl font-bold font-headingFont text-prime50 ">
                 Tech <span className="   text-prime100 ">Wisdom</span>{" "}
               </p>
             </div>
           </Link>
         </div>
 
-        {/* Menu icon */}
-        <div
+
+        {/* right link section  */}
+        <div className="rightLinkSection  flex items-center gap-x-4 md:gap-x-0  " >
+
+              {/* button section  */}
+        <div className="buttonSection order-1 md:order-2  md:ml-5 lg:ml-8  flex  items-center gap-x-0.5  ">
+          {!user ? (
+            <Link href={"/login"}>
+              <Button className=" -z-[1] text-xs sm:text-sm md:text-base bg-prime50 hover:bg-prime100 ">
+                Sign in
+              </Button>
+            </Link>
+          ) : (
+            <div className="relative   ">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Avatar className="cursor-pointer  border border-gray-500 ">
+                    <AvatarImage src={user?.profilePicture} alt="@shadcn" />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56 bg-black50 text-white ">
+                  <DropdownMenuGroup>
+                    <Link
+                      href={` ${
+                        user?.userRole === "user" ? "/profile" : "/admin"
+                      } `}
+                    >
+                      <DropdownMenuItem>
+                        <span>Dashboard</span>
+                        <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+                      </DropdownMenuItem>
+                    </Link>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem onClick={() => handleLogout()}>
+                      <span>Log out </span>
+                      <DropdownMenuShortcut>⌘L</DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              {/*  */}
+              {/*  */}
+              {/*  */}
+            </div>
+          )}
+
+
+
+          {/*  */}
+          {/*  */}
+        </div>
+        {/* button section ends  */}
+
+
+        
+             {/* Menu icon */}
+             <div
           onClick={() => setOpen(!open)}
-          className="   flex justify-center items-center   cursor-pointer md:hidden  font-semibold  text-2xl text-prime50 "
+          className=" order-2 md:order-1 flex justify-center items-center   cursor-pointer md:hidden  font-bold  text-2xl text-prime50 "
         >
           {open ? <RiCloseFill className="   " /> : <RiMenu3Fill />}
         </div>
@@ -103,61 +164,15 @@ const Navbar = () => {
                 </Link>
               </li>
             ))}
-
-          <div className="buttonSection  md:ml-5 lg:ml-8  flex  items-center gap-x-0.5  ">
-            {!user ? (
-              <Link href={"/login"}>
-                <Button className=" -z-[1] text-xs sm:text-sm md:text-base bg-prime50 hover:bg-prime100 ">
-                  Sign in
-                </Button>
-              </Link>
-            ) : (
-              <div className="relative  ">
-                {/*  */}
-                {/*  */}
-                {/*  */}
-                {/*  */}
-
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Avatar className="cursor-pointer">
-                      <AvatarImage src={user?.profilePicture} alt="@shadcn" />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56 bg-black50 text-white ">
-                    <DropdownMenuGroup>
-                      <Link
-                        href={` ${
-                          user?.userRole === "user" ? "/profile" : "/admin"
-                        } `}
-                      >
-                        <DropdownMenuItem>
-                          <span>Dashboard</span>
-                          <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
-                        </DropdownMenuItem>
-                      </Link>
-                    </DropdownMenuGroup>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuGroup>
-                      <DropdownMenuItem onClick={() => handleLogout()}>
-                        <span>Log out </span>
-                        <DropdownMenuShortcut>⌘L</DropdownMenuShortcut>
-                      </DropdownMenuItem>
-                    </DropdownMenuGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-
-                {/*  */}
-                {/*  */}
-                {/*  */}
-              </div>
-            )}
-
-            {/*  */}
-            {/*  */}
-          </div>
         </ul>
+{/* link items ends  */}
+
+        </div>
+        {/* right link section ends  */}
+
+     
+    
+    {/*  */}
       </Wrapper>
     </div>
   );

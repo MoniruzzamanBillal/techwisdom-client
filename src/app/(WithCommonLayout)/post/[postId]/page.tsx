@@ -21,6 +21,10 @@ import { toast } from "sonner";
 
 import { BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+
+import { FacebookShareButton } from "react-share";
+import { FaFacebook } from "react-icons/fa";
 
 type IProps = {
   params: {
@@ -28,7 +32,7 @@ type IProps = {
   };
 };
 
-const PostDetail = ({ params: { postId } } : IProps) => {
+const PostDetail = ({ params: { postId } }: IProps) => {
   const router = useRouter();
   const { user } = useUserContext();
 
@@ -52,9 +56,14 @@ const PostDetail = ({ params: { postId } } : IProps) => {
 
   // ! check if the user is subscribed
   useEffect(() => {
-   
-    if (postDetail?.data?.isPremium && !user?.isVerified && !(user?.userRole === "admin" || postDetail?.data?.authorId?._id === user?._id) ) {
-     
+    if (
+      postDetail?.data?.isPremium &&
+      !user?.isVerified &&
+      !(
+        user?.userRole === "admin" ||
+        postDetail?.data?.authorId?._id === user?._id
+      )
+    ) {
       toast.error("Subscribe for reading the post !!");
       router.push("/");
     }
@@ -137,96 +146,107 @@ const PostDetail = ({ params: { postId } } : IProps) => {
 
   if (!isLoading && !isPending && postDetail) {
     content = (
-      <div className="postDataContainer p-6  rounded-md shadow-md text-white flex flex-col gap-y-3 ">
+      <div className=" container postDataContainer p-6  rounded-md shadow-md text-white flex flex-col gap-y-3 ">
         <PostDetailCard postData={postDetail?.data} />
+
+        <div className=" py-5 print:hidden ">
+          <Button
+            className=" text-xs sm:text-sm md:text-base bg-sky-600 hover:bg-prime100 font-semibold text-gray-100 "
+            onClick={() => window.print()}
+          >
+            Download this post
+          </Button>
+        </div>
 
         {/* upvote downvote section starts  */}
 
+        {user && (
+          <div className="voteContainer print:hidden ">
+            {postDetail?.data?.authorId?._id !== user?._id && (
+              <div className="upvoteDownvoteContainer py-4 mt-2 flex flex-col gap-y-3 border-y border-gray-600  ">
+                {/*  */}
+                <div className="upvoteContainer flex items-center gap-x-2 text-lg xsm:text-xl xmd:text-2xl ">
+                  <p>Give Upvote : </p>
 
-{
-  user && <div className="voteContainer">
+                  {postDetail?.data?.upvotedBy?.includes(user?._id) ? (
+                    <BiSolidLike className=" text-2xl sm:text-3xl text-gray-500 cursor-pointer " />
+                  ) : (
+                    <BiSolidLike
+                      onClick={handleGiveUpvote}
+                      className=" text-2xl sm:text-3xl text-prime100 cursor-pointer "
+                    />
+                  )}
+                </div>
+                {/*  */}
 
-  {postDetail?.data?.authorId?._id !== user?._id && (
-            <div className="upvoteDownvoteContainer py-4 mt-2 flex flex-col gap-y-3 border-y border-gray-600  ">
-              {/*  */}
-              <div className="upvoteContainer flex items-center gap-x-2 text-2xl ">
-                <p>Give Upvote : </p>
-  
-                {postDetail?.data?.upvotedBy?.includes(user?._id) ? (
-                  <BiSolidLike className=" text-3xl text-gray-500 cursor-pointer " />
-                ) : (
-                  <BiSolidLike
-                    onClick={handleGiveUpvote}
-                    className=" text-3xl text-prime100 cursor-pointer "
-                  />
-                )}
+                <div className="downVoteContainer  flex items-center gap-x-2 text-lg xsm:text-xl xmd:text-2xl ">
+                  <p>Give Downvote : </p>
+
+                  {postDetail?.data?.downvotedBy?.includes(user?._id) ? (
+                    <BiSolidDislike className=" text-2xl sm:text-3xl text-gray-500 cursor-pointer " />
+                  ) : (
+                    <BiSolidDislike
+                      onClick={handleGiveDownvote}
+                      className=" text-2xl sm:text-3xl text-prime100 cursor-pointer "
+                    />
+                  )}
+                </div>
               </div>
-              {/*  */}
-  
-              <div className="downVoteContainer  flex items-center gap-x-2 text-2xl ">
-                <p>Give Downvote : </p>
-  
-                {postDetail?.data?.downvotedBy?.includes(user?._id) ? (
-                  <BiSolidDislike className=" text-3xl text-gray-500 cursor-pointer " />
-                ) : (
-                  <BiSolidDislike
-                    onClick={handleGiveDownvote}
-                    className=" text-3xl text-prime100 cursor-pointer "
-                  />
-                )}
-              </div>
-            </div>
-          )}
-  
-  
-  </div>
-  
-}
-
-
-      
+            )}
+          </div>
+        )}
 
         {/* upvote downvote section  ends  */}
 
+        {/* social media share section starts  */}
+        <div className="socialMediaShare py-4 mt-2  border-y border-gray-600 text-xl flex items-center gap-x-3 ">
+          <p>share this on :</p>
 
-       
+          {/* facebook share option  */}
+          <FacebookShareButton
+            hashtag={`#${postDetail?.data?.category?.cName}`}
+            url={`https://techwisdom.vercel.app/post/${postId}`}
+          >
+            <FaFacebook className=" text-2xl font-medium text-blue-500 " />
+          </FacebookShareButton>
+        </div>
+        {/* social media share section ends  */}
 
-        <h1 className=" font-semibold text-2xl mb-3 mt-6 ">Comments </h1>
+        <h1 className="   font-semibold text-2xl mb-3 mt-6 print:hidden ">
+          Comments{" "}
+        </h1>
 
+        {user && (
+          <div className="commentInputContainer print:hidden">
+            {postDetail?.data?.authorId?._id === user?._id ? (
+              " "
+            ) : (
+              <Comment
+                comment={comment}
+                setComment={setComment}
+                handleAddComment={handleAddComment}
+              />
+            )}
+          </div>
+        )}
 
-{
-  user &&  <div className="commentInputContainer">
-  {postDetail?.data?.authorId?._id === user?._id ? (
-    " "
-  ) : (
-    <Comment
-      comment={comment}
-      setComment={setComment}
-      handleAddComment={handleAddComment}
-    />
-  )}
-
-
-  </div>
-}
-
-       
-       
-        {postDetail?.data?.comments &&
-          postDetail?.data?.comments?.map((commentData: TComment) => (
-            <UserCommentCard
-              key={commentData?._id}
-              commentData={commentData}
-              postId={postId}
-            />
-          ))}
+        <div className="userCommentCard print:hidden  ">
+          {postDetail?.data?.comments &&
+            postDetail?.data?.comments?.map((commentData: TComment) => (
+              <UserCommentCard
+                key={commentData?._id}
+                commentData={commentData}
+                postId={postId}
+              />
+            ))}
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="postDetailContainer  pt-4 bg-black50 min-h-screen ">
-      <Wrapper className=" postDetailWrapper my-4  bg-black100 rounded-md p-6  ">
+    <div className="postDetailContainer  py-4 bg-black50 min-h-screen ">
+      <Wrapper className=" postDetailWrapper my-3 border border-gray-700 bg-black100 rounded-md p-5  ">
         {content}
       </Wrapper>
     </div>
