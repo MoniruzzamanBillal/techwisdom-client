@@ -199,7 +199,9 @@ const PostDetail = ({ params: { postId } }: IProps) => {
         {/* upvote downvote section  ends  */}
 
         {/* social media share section starts  */}
-        <div className="socialMediaShare py-4 mt-2  border-y border-gray-600 text-xl flex items-center gap-x-3 ">
+
+        {
+          user &&  <div className="socialMediaShare py-4 mt-2  border-y border-gray-600 text-xl flex items-center gap-x-3 ">
           <p>share this on :</p>
 
           {/* facebook share option  */}
@@ -210,6 +212,12 @@ const PostDetail = ({ params: { postId } }: IProps) => {
             <FaFacebook className=" text-2xl font-medium text-blue-500 " />
           </FacebookShareButton>
         </div>
+        }
+
+
+       
+
+
         {/* social media share section ends  */}
 
         <h1 className="   font-semibold text-2xl mb-3 mt-6 print:hidden ">
