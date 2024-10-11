@@ -17,6 +17,10 @@ const userProfileLinks: TUserProfile[] = [
     label: "My Following",
     link: "/profile/my-following",
   },
+  {
+    label: "Statistics",
+    link: "/profile/my-statistics",
+  },
 
   {
     label: "My subscriptin",

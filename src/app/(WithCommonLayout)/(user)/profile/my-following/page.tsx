@@ -15,8 +15,8 @@ const MyFollowing = () => {
   if (!user?.following?.length) {
     content = (
       <>
-        <div className="bg-black20 h-[60vh] w-[90vw] xl:w-[62vw] m-auto  flex  robotoFont mt-6 flex-col items-center justify-center   p-6 rounded-md shadow-md  ">
-          <h1 className=" text-3xl sm:text-4xl font-bold text-white mb-4">
+        <div className=" border border-gray-600 bg-black20 h-[60vh] w-[90vw] xl:w-[62vw] m-auto  flex  robotoFont mt-6 flex-col items-center justify-center   p-6 rounded-md shadow-md  ">
+          <h1 className=" text-3xl sm:text-4xl font-bold text-prime50 mb-4">
             You are not following anyone !!!
           </h1>
         </div>
@@ -46,7 +46,7 @@ const MyFollowing = () => {
 
   return (
     <div className="myFollowingContainer pt-4   ">
-      <Wrapper className=" p-6 border border-gray-600 bg-black100 rounded-md text-white shadow-md   ">
+      <Wrapper className=" p-6 border border-gray-600 bg-black100 rounded-md text-white shadow-md   "  >
         <p className="brand text-xl xsm:text-2xl md:text-3xl font-medium mb-8 xsm:mb-10 md:mb-14  ">
           {" "}
           My followings{" "}

@@ -4,7 +4,7 @@ const StatisticsCard = ({ number, text }: { number: number; text: string }) => {
   //   const { number, text } = counter;
 
   return (
-    <div className="flex group flex-col items-center justify-center rounded-lg border border-gray-700 bg-black50 shadow-md   p-4 lg:p-8  cursor-pointer relative m-auto w-[94%] xsm:w-full  hover:shadow-lg ">
+    <div className="flex group flex-col items-center justify-center rounded-lg border border-gray-600 bg-black50 shadow-md   p-4 lg:p-8  cursor-pointer relative m-auto w-[94%] xsm:w-full  hover:shadow-lg ">
       {/* top border  */}
 
       {/* top line  */}

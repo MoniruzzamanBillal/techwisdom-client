@@ -89,8 +89,6 @@ const AdminRegistration = () => {
               placeholder="Confirm your password "
             />
 
-           
-
             <Button>Register admin </Button>
           </TechWisdomForm>
           {/* form ends */}

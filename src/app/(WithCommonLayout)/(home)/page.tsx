@@ -27,13 +27,13 @@ const Home = () => {
 
   const [postsData, setPostData] = useState<TPostsResponse[] | []>([]);
 
-  // console.log("from server = ", allPostData?.data);
+  console.log("from server = ", allPostData?.data);
   // console.log(type);
   // console.log(searchTerm);
-  // console.log("sort value = ", sort);
+  console.log("sort value = ", sort);
   // console.log( 'debounce = ' ,  debounceTerm);
-  // console.log(params);
-  // console.log("current page = ", currentPage);
+  console.log(params);
+  console.log("current page = ", currentPage);
   // console.log(postsData?.length);
 
   // ! for handling see more button , increase pagination state value by 1
@@ -56,10 +56,8 @@ const Home = () => {
 
       if (sort) {
         if (sort !== "a") {
-      
           newParam.sort = sort;
-         
-        } 
+        }
 
         // newParam.sort = sort
       }
@@ -79,7 +77,7 @@ const Home = () => {
   useEffect(() => {
     const updatePostData = () => {
       if (allPostData?.data) {
-        if (sort !== 'a' || searchTerm || type) {
+        if ((sort && sort !== "a") || searchTerm || type) {
           setPostData([]);
           setPostData(allPostData?.data);
           setCurrentPage(1);
@@ -158,21 +156,23 @@ const Home = () => {
               [1, 2, 3].map((item, ind) => <BlogCardLoading key={ind} />)}
 
             {/* for showing see more button  */}
-           
-            {  (sort === "a" || !sort) &&  allPostData?.data?.length && (
-              <div className="seeMoreBtn py-3 flex justify-center items-center ">
-                <Button
-                  onClick={() => handlePaginateItem()}
-                  className=" border border-sky-700 bg-prime50 hover:bg-prime100 shadow-md  "
-                >
-                  See More
-                </Button>
-              </div>
-            )}
+
+            {type ||
+              searchTerm ||
+              ((sort === "a" || !sort) && allPostData?.data?.length && (
+                <div className="seeMoreBtn py-3 flex justify-center items-center ">
+                  <Button
+                    onClick={() => handlePaginateItem()}
+                    className=" border border-sky-700 bg-prime50 hover:bg-prime100 shadow-md  "
+                  >
+                    See More
+                  </Button>
+                </div>
+              ))}
 
             {/* no post message  */}
             {!allPostData?.data?.length && !blogsDataLoading ? (
-              <div className="noPostAvailable pt-2 text-center text-red-500 text-2xl font-semibold  ">
+              <div className="noPostAvailable pb-1 text-center text-red-500 text-2xl font-semibold  ">
                 <p>No More post available</p>
               </div>
             ) : (

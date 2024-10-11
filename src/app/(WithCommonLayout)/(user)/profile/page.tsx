@@ -18,48 +18,41 @@ const UserProfile = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sort, setSortBy] = useState("");
 
-  const debounceTerm = useDebounce(searchTerm , 500 ) 
+  const debounceTerm = useDebounce(searchTerm, 500);
   const [params, setParams] = useState<Record<string, unknown> | undefined>(
     undefined
   );
 
-
   const { data: userPostData, isPending: userPostPending } = useGetUserPost(
-    token as string ,params
+    token as string,
+    params
   );
 
   // console.log(userPostData?.data);
-  console.log(params);
+  // console.log(params);
 
+  //! Use effect to track param value
+  useEffect(() => {
+    const updateParam = () => {
+      const newParam: Record<string, unknown> = {};
 
-     //! Use effect to track param value
-     useEffect(() => {
-      const updateParam = () => {
-        const newParam: Record<string, unknown> = {};
-  
-        
-       
-        if (debounceTerm) {
-          newParam.searchTerm = debounceTerm;
-        }
-       
-      
-  
-        if (type) {
-          newParam.type = type;
-        }
-  
-        if (sort) {
-          newParam.sort = sort;
-        }
-  
-        setParams(newParam);
-      };
-  
-      updateParam();
-    }, [ debounceTerm ,  type, sort]);
+      if (debounceTerm) {
+        newParam.searchTerm = debounceTerm;
+      }
 
+      if (type) {
+        newParam.type = type;
+      }
 
+      if (sort) {
+        newParam.sort = sort;
+      }
+
+      setParams(newParam);
+    };
+
+    updateParam();
+  }, [debounceTerm, type, sort]);
 
   let content = null;
 
@@ -107,7 +100,12 @@ const UserProfile = () => {
         {/* add post button ends  */}
 
         <div className="searchFilterSection mb-4 ">
-        <SortFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm} sort={sort} setSortBy={setSortBy} />
+          <SortFilter
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            sort={sort}
+            setSortBy={setSortBy}
+          />
         </div>
 
         {/* main body part starts  */}

@@ -200,23 +200,19 @@ const PostDetail = ({ params: { postId } }: IProps) => {
 
         {/* social media share section starts  */}
 
-        {
-          user &&  <div className="socialMediaShare py-4 mt-2  border-y border-gray-600 text-xl flex items-center gap-x-3 ">
-          <p>share this on :</p>
+        {user && (
+          <div className="socialMediaShare py-4 mt-2  border-y border-gray-600 text-xl flex items-center gap-x-3 ">
+            <p>share this on :</p>
 
-          {/* facebook share option  */}
-          <FacebookShareButton
-            hashtag={`#${postDetail?.data?.category?.cName}`}
-            url={`https://techwisdom.vercel.app/post/${postId}`}
-          >
-            <FaFacebook className=" text-2xl font-medium text-blue-500 " />
-          </FacebookShareButton>
-        </div>
-        }
-
-
-       
-
+            {/* facebook share option  */}
+            <FacebookShareButton
+              hashtag={`#${postDetail?.data?.category?.cName}`}
+              url={`https://techwisdom.vercel.app/post/${postId}`}
+            >
+              <FaFacebook className=" text-2xl font-medium text-blue-500 " />
+            </FacebookShareButton>
+          </div>
+        )}
 
         {/* social media share section ends  */}
 

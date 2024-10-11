@@ -28,7 +28,10 @@ const Statistics = () => {
         <div className="rounded-full size-16 bg-prime100 animate-ping"></div>
       </div>
     );
-  } else {
+  }
+  
+  
+  else {
     content = (
       <div className="statisticsCardContent grid xsm:grid-cols-2 lg:grid-cols-3 md:gap-x-3 gap-x-2  gap-y-4">
         <StatisticsCard number={revenueData?.data} text={"Total Revenue"} />

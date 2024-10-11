@@ -7,6 +7,8 @@ import {
   makePost,
   updatePost,
   giveDownVote,
+  getUserPostsCount,
+  getUserPostsLikeCount,getUserPostsCommentCount , getUserPostsDislikeCount
 } from "@/services/PostServices";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -29,26 +31,92 @@ export const useCreatePost = () => {
 };
 
 // ! for getting all post
-export const useGetPosts = (params?: Record<string, unknown> ) => {
+export const useGetPosts = (params?: Record<string, unknown>) => {
   return useQuery({
-    queryKey: ["get-all-posts" , params],
+    queryKey: ["get-all-posts", params],
     queryFn: async () => await getAllPosts(params),
   });
 };
 
-// ! for single  post
-export const useGetUserPost = ( token: string,
-  params?: Record<string, unknown> ) => {
+// ! for getting user  post
+export const useGetUserPost = (
+  token: string,
+  params?: Record<string, unknown>
+) => {
   return useQuery({
-    queryKey: ["get-user-post", token , params],
+    queryKey: ["get-user-post", token, params],
     queryFn: async ({ queryKey }) => {
-      const token = queryKey[1] as string 
+      const token = queryKey[1] as string;
       const params = queryKey[2] as Record<string, unknown> | undefined;
-      
-      return await getUserPosts(token , params );
-    }, enabled : !!token
+
+      return await getUserPosts(token, params);
+    },
+    enabled: !!token,
   });
 };
+
+// ! for getting user  post count
+export const useGetUserPostCount = (token: string) => {
+  return useQuery({
+    queryKey: ["get-user-post-count", token],
+    queryFn: async ({ queryKey }) => {
+      const token = queryKey[1] as string;
+
+      return await getUserPostsCount(token);
+    },
+    enabled: !!token,
+  });
+};
+
+
+
+// ! for getting user post like count
+export const useGetUserPostLikeCount = (token: string) => {
+  return useQuery({
+    queryKey: ["get-user-post-like-count", token],
+    queryFn: async ({ queryKey }) => {
+      const token = queryKey[1] as string;
+
+      return await getUserPostsLikeCount(token);
+    },
+    enabled: !!token,
+  });
+};
+
+
+
+
+// ! for getting user post dislike count
+export const useGetUserPostDislikeCount = (token: string) => {
+  return useQuery({
+    queryKey: ["get-user-post-dislike-count", token],
+    queryFn: async ({ queryKey }) => {
+      const token = queryKey[1] as string;
+
+      return await getUserPostsDislikeCount(token);
+    },
+    enabled: !!token,
+  });
+};
+
+
+// ! for getting user post dislike count
+export const useGetUserPostCommentCount = (token: string) => {
+  return useQuery({
+    queryKey: ["get-user-post-comment-count", token],
+    queryFn: async ({ queryKey }) => {
+      const token = queryKey[1] as string;
+
+      return await getUserPostsCommentCount(token);
+    },
+    enabled: !!token,
+  });
+};
+
+
+
+
+
 
 // ! for single  post
 export const useGetSinglePost = (id: string) => {

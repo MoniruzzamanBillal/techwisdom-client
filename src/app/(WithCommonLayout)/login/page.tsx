@@ -34,16 +34,12 @@ const Login = () => {
 
       setIsLoading(false);
 
-      console.log(response)
-
+      console.log(response);
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      
-    toast.error( error?.message)
-      
+      toast.error(error?.message);
 
-      
       setIsLoading(false);
     }
   };
