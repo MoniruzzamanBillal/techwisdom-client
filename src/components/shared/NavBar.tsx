@@ -73,106 +73,97 @@ const Navbar = () => {
           </Link>
         </div>
 
-
         {/* right link section  */}
-        <div className="rightLinkSection  flex items-center gap-x-4 md:gap-x-0  " >
-
-              {/* button section  */}
-        <div className="buttonSection order-1 md:order-2  md:ml-5 lg:ml-8  flex  items-center gap-x-0.5  ">
-          {!user ? (
-            <Link href={"/login"}>
-              <Button className=" -z-[1] text-xs sm:text-sm md:text-base bg-prime50 hover:bg-prime100 ">
-                Sign in
-              </Button>
-            </Link>
-          ) : (
-            <div className="relative   ">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Avatar className="cursor-pointer  border border-gray-500 ">
-                    <AvatarImage src={user?.profilePicture} alt="@shadcn" />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56 bg-black50 text-white ">
-                  <DropdownMenuGroup>
-                    <Link
-                      href={` ${
-                        user?.userRole === "user" ? "/profile" : "/admin"
-                      } `}
-                    >
-                      <DropdownMenuItem>
-                        <span>Dashboard</span>
-                        <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+        <div className="rightLinkSection  flex items-center gap-x-4 md:gap-x-0  ">
+          {/* button section  */}
+          <div className="buttonSection order-1 md:order-2  md:ml-5 lg:ml-8  flex  items-center gap-x-0.5  ">
+            {!user ? (
+              <Link href={"/login"}>
+                <Button className=" -z-[1] text-xs sm:text-sm md:text-base bg-prime50 hover:bg-prime100 ">
+                  Sign in
+                </Button>
+              </Link>
+            ) : (
+              <div className="relative   ">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Avatar className="cursor-pointer  border border-gray-500 ">
+                      <AvatarImage src={user?.profilePicture} alt="@shadcn" />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56 bg-black50 text-white ">
+                    <DropdownMenuGroup>
+                      <Link
+                        href={` ${
+                          user?.userRole === "user" ? "/profile" : "/admin"
+                        } `}
+                      >
+                        <DropdownMenuItem>
+                          <span>Dashboard</span>
+                          <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+                        </DropdownMenuItem>
+                      </Link>
+                    </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuGroup>
+                      <DropdownMenuItem onClick={() => handleLogout()}>
+                        <span>Log out </span>
+                        <DropdownMenuShortcut>⌘L</DropdownMenuShortcut>
                       </DropdownMenuItem>
-                    </Link>
-                  </DropdownMenuGroup>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuGroup>
-                    <DropdownMenuItem onClick={() => handleLogout()}>
-                      <span>Log out </span>
-                      <DropdownMenuShortcut>⌘L</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                  </DropdownMenuGroup>
-                </DropdownMenuContent>
-              </DropdownMenu>
+                    </DropdownMenuGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
 
-              {/*  */}
-              {/*  */}
-              {/*  */}
-            </div>
-          )}
+                {/*  */}
+                {/*  */}
+                {/*  */}
+              </div>
+            )}
 
+            {/*  */}
+            {/*  */}
+          </div>
+          {/* button section ends  */}
 
+          {/* Menu icon */}
+          <div
+            onClick={() => setOpen(!open)}
+            className=" order-2 md:order-1 flex justify-center items-center   cursor-pointer md:hidden  font-bold  text-2xl text-prime50 "
+          >
+            {open ? <RiCloseFill className="   " /> : <RiMenu3Fill />}
+          </div>
 
-          {/*  */}
-          {/*  */}
-        </div>
-        {/* button section ends  */}
-
-
-        
-             {/* Menu icon */}
-             <div
-          onClick={() => setOpen(!open)}
-          className=" order-2 md:order-1 flex justify-center items-center   cursor-pointer md:hidden  font-bold  text-2xl text-prime50 "
-        >
-          {open ? <RiCloseFill className="   " /> : <RiMenu3Fill />}
-        </div>
-
-        {/* linke items */}
-        <ul
-          className={` absolute bg-black20 shadow-md md:shadow-none z-[-1] left-0 w-full pl-10 md:flex md:items-center  pb-8 md:pb-0   md:static md:bg-transparent  md:z-auto   md:w-auto md:pl-0  transition-all duration-300 ease-in text-sm sm:text-base md:text-xs xmd:text-sm lg:text-base  ${
-            open ? "top-[3.9rem] block" : "top-[-490px]"
-          }  `}
-          style={{
-            backdropFilter: "blur(8px)",
-          }}
-        >
-          {Links &&
-            Links.map((link, index) => (
-              <li
-                key={index}
-                className="  my-5 xsm:my-7 md:ml-8 md:my-0  font-semibold uppercase"
-              >
-                <Link
-                  href={link.link}
-                  className=" text-white hover:text-prime50 duration-500  "
-                  onClick={() => setOpen(false)}
+          {/* linke items */}
+          <ul
+            className={` absolute bg-black20 shadow-md md:shadow-none z-[-1] left-0 w-full pl-10 md:flex md:items-center  pb-8 md:pb-0   md:static md:bg-transparent  md:z-auto   md:w-auto md:pl-0  transition-all duration-300 ease-in text-sm sm:text-base md:text-xs xmd:text-sm lg:text-base  ${
+              open ? "top-[3.9rem] block" : "top-[-490px]"
+            }  `}
+            style={{
+              backdropFilter: "blur(8px)",
+            }}
+          >
+            {Links &&
+              Links.map((link, index) => (
+                <li
+                  key={index}
+                  className="  my-5 xsm:my-7 md:ml-8 md:my-0  font-semibold uppercase"
                 >
-                  {link.name}
-                </Link>
-              </li>
-            ))}
-        </ul>
-{/* link items ends  */}
-
+                  <Link
+                    href={link.link}
+                    className=" text-white hover:text-prime50 duration-500  "
+                    onClick={() => setOpen(false)}
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+          </ul>
+          {/* link items ends  */}
         </div>
         {/* right link section ends  */}
 
-     
-    
-    {/*  */}
+        {/*  */}
       </Wrapper>
     </div>
   );

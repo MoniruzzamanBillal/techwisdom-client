@@ -1,4 +1,5 @@
 import {
+  activityLog,
   adminRegister,
   loginUser,
   resetPassword,
@@ -6,19 +7,29 @@ import {
   updateUser,
   userRegister,
 } from "@/services/AuthService";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
 // ! for login
 export const useUserLogin = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationKey: ["user-login"],
     mutationFn: async (userData: FieldValues) => await loginUser(userData),
     onSuccess: () => {
       toast.success("User login successful.");
+      queryClient.invalidateQueries({ queryKey: ["activity-log"] });
     },
-   
+  });
+};
+
+// ! for getting activity log data
+export const useGetActivityLog = () => {
+  return useQuery({
+    queryKey: ["activity-log"],
+    queryFn: async () => await activityLog(),
   });
 };
 
@@ -61,33 +72,25 @@ export const useUserUpdate = () => {
   });
 };
 
-
-
-
-// ! for sending email for reset 
-export const useSendResetReq = ()=>{
+// ! for sending email for reset
+export const useSendResetReq = () => {
   return useMutation({
-    mutationKey: ["send-email-req"], 
+    mutationKey: ["send-email-req"],
 
-    mutationFn : async(email : string ) => await sendEmailForReset(email) 
-
-
-  })
-}
-
+    mutationFn: async (email: string) => await sendEmailForReset(email),
+  });
+};
 
 type TResetPassword = {
-  userId : string 
-  password : string
-}
+  userId: string;
+  password: string;
+};
 
-// ! for reseting password 
-export const useResetPassword = ()=>{
+// ! for reseting password
+export const useResetPassword = () => {
   return useMutation({
-    mutationKey: ["reset-password"], 
+    mutationKey: ["reset-password"],
 
-    mutationFn : async(payload : TResetPassword ) => await resetPassword(payload) 
-
-
-  })
-}
+    mutationFn: async (payload: TResetPassword) => await resetPassword(payload),
+  });
+};

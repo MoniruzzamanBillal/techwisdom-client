@@ -22,22 +22,34 @@ const Login = () => {
   const { handleSetToken, setIsLoading, handleSetUser, isLoading } =
     useUserContext();
 
-  const { mutateAsync: handleUserLogin, isPending, isSuccess } = useUserLogin();
+  const {
+    mutateAsync: handleUserLogin,
+    isPending,
+    isSuccess,
+    isError,
+  } = useUserLogin();
+
+  console.log(isError)
 
   // ! for login
   const handleLogin = async (data: FieldValues) => {
     try {
       const response = await handleUserLogin(data);
+      console.log(response);
+
+      if (!response?.success) {
+        toast.error(response?.message);
+        return;
+      }
 
       handleSetUser(response?.data);
       handleSetToken(response?.token);
 
       setIsLoading(false);
 
-      console.log(response);
-
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      console.log("from login = ", error);
       toast.error(error?.message);
 
       setIsLoading(false);

@@ -1,0 +1,11 @@
+{
+  "css.lint.unknownAtRules": "ignore",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.tslint": "explicit"
+    // "source.organizeImports": "explicit"
+  },
+  "cSpell.words": [],
+  "editor.fontSize": 18
+}

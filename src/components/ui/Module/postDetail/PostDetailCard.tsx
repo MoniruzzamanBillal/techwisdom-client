@@ -30,6 +30,8 @@ const PostDetailCard = ({ postData }: IProps) => {
   const { mutateAsync: unfollowUser, isPending: userUnfollowPending } =
     useUnfollowPerson();
 
+  console.log(postData);
+
   // ! for following a user
   const handleFollowUser = async (followerId: string) => {
     const payload = {
@@ -123,57 +125,53 @@ const PostDetailCard = ({ postData }: IProps) => {
 
           {/* top button starts  */}
 
-          {
-            user &&  <div className="editContainer mt-7  ">
-            {postData?.authorId?._id === user?._id ? (
-              <Link
-                href={`/update-post/${postData?._id}`}
-                className=" bg-red-500 text-gray-50 hover:bg-red-600 hover:text-gray-100 hover:scale-105 active:scale-100 hover:shadow-lg py-2 px-5 rounded transition-all duration-200 font-medium  navLinkFont "
-              >
-                Edit post
-              </Link>
-            ) : userData?.data?.following?.includes(postData?.authorId?._id) ? (
-              <div className="unfollowBtn">
-                <Button
-                  disabled={userUnfollowPending}
-                  className={` bg-gray-600 hover:bg-gray-700  ${
-                    userUnfollowPending ? " cursor-not-allowed " : ""
-                  } `}
-                  onClick={() => handleUnfollowUser(postData?.authorId?._id)}
+          {user && (
+            <div className="editContainer mt-7  ">
+              {postData?.authorId?._id === user?._id ? (
+                <Link
+                  href={`/update-post/${postData?._id}`}
+                  className=" bg-red-500 text-gray-50 hover:bg-red-600 hover:text-gray-100 hover:scale-105 active:scale-100 hover:shadow-lg py-2 px-5 rounded transition-all duration-200 font-medium  navLinkFont "
                 >
-                  Following
-                </Button>
-              </div>
-            ) : (
-              <div className="followBtn">
-                <Button
-                  disabled={userFollowPending}
-                  className={` bg-prime50 hover:bg-prime100  ${
-                    userFollowPending ? "cursor-not-allowed" : ""
-                  } `}
-                  onClick={() => handleFollowUser(postData?.authorId?._id)}
-                >
-                  Follow
-                </Button>
-              </div>
-            )}
-          </div>
-          }
+                  Edit post
+                </Link>
+              ) : userData?.data?.following?.includes(
+                  postData?.authorId?._id
+                ) ? (
+                <div className="unfollowBtn">
+                  <Button
+                    disabled={userUnfollowPending}
+                    className={` bg-gray-600 hover:bg-gray-700  ${
+                      userUnfollowPending ? " cursor-not-allowed " : ""
+                    } `}
+                    onClick={() => handleUnfollowUser(postData?.authorId?._id)}
+                  >
+                    Following
+                  </Button>
+                </div>
+              ) : (
+                <div className="followBtn">
+                  <Button
+                    disabled={userFollowPending}
+                    className={` bg-prime50 hover:bg-prime100  ${
+                      userFollowPending ? "cursor-not-allowed" : ""
+                    } `}
+                    onClick={() => handleFollowUser(postData?.authorId?._id)}
+                  >
+                    Follow
+                  </Button>
+                </div>
+              )}
+            </div>
+          )}
 
-         
           {/* top button ends  */}
-
-
-
         </div>
         {/* left side section ends  */}
 
         {/* right section starts  */}
         <div className="topRightSection w-full xsm:w-[96%] xmd:w-[40%]  ">
           <Image
-            src={
-              "https://res.cloudinary.com/drmkqpdex/image/upload/v1728112563/testing%20image%20upload.jpg"
-            }
+            src={postData?.postImg}
             alt="blog Image "
             height={700}
             width={700}

@@ -10,8 +10,7 @@ const ProfileImgSection = () => {
   const { user } = useUserContext();
 
   // console.log("in profile image section = ", user);
-  // console.log(user?.followers?.length);
-
+  // console.log(user?.profilePicture);
 
   return (
     <div className="ProfileImgSectionContainer   rounded-md ">
@@ -20,18 +19,14 @@ const ProfileImgSection = () => {
         <div className="profileLeftSection  flex  items-center gap-x-5 ">
           {/* left image section starts  */}
           <div className="imgSection rounded-full overflow-auto w-[8rem] sm:w-[10rem] md:w-[12rem] xmd:w-[14rem] ">
-
-          {
-
-user?.profilePicture && <Image
-src={user?.profilePicture}
-alt="progileImage"
-height={700}
-width={700}
-/>
-
-          }
-            
+            {user?.profilePicture && (
+              <Image
+                src={user?.profilePicture}
+                alt="progileImage"
+                height={700}
+                width={700}
+              />
+            )}
           </div>
           {/* left image section ends */}
 
@@ -42,20 +37,17 @@ width={700}
                 {user?.name}
               </p>
 
-             
-
-
-              {
-user?.isVerified &&  <MdVerifiedUser className=" text-2xl text-prime50 " />
-              }
-
-
+              {user?.isVerified && (
+                <MdVerifiedUser className=" text-2xl text-prime50 " />
+              )}
             </div>
 
+            <p className=" text-sm font-medium text-gray-400 mb-2 ">
+              {" "}
+              {user?.email}{" "}
+            </p>
 
-<p className=" text-sm font-medium text-gray-400 mb-2 " >  {user?.email} </p>
-
-            <p className=" font-medium text-gray-300  " >
+            <p className=" font-medium text-gray-300  ">
               {" "}
               {user?.followers?.length &&
                 user?.followers?.length} Followers{" "}

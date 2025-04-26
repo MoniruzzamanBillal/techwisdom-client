@@ -52,7 +52,8 @@ const PostDetail = ({ params: { postId } }: IProps) => {
   const [comment, setComment] = useState<string | null>(null);
 
   // console.log(user);
-  // console.log(postDetail);
+  // console.log(postDetail?.data);
+  // console.log(postDetail?.data?.postImg);
 
   // ! check if the user is subscribed
   useEffect(() => {

@@ -8,7 +8,9 @@ import {
   updatePost,
   giveDownVote,
   getUserPostsCount,
-  getUserPostsLikeCount,getUserPostsCommentCount , getUserPostsDislikeCount
+  getUserPostsLikeCount,
+  getUserPostsCommentCount,
+  getUserPostsDislikeCount,
 } from "@/services/PostServices";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -68,8 +70,6 @@ export const useGetUserPostCount = (token: string) => {
   });
 };
 
-
-
 // ! for getting user post like count
 export const useGetUserPostLikeCount = (token: string) => {
   return useQuery({
@@ -82,9 +82,6 @@ export const useGetUserPostLikeCount = (token: string) => {
     enabled: !!token,
   });
 };
-
-
-
 
 // ! for getting user post dislike count
 export const useGetUserPostDislikeCount = (token: string) => {
@@ -99,7 +96,6 @@ export const useGetUserPostDislikeCount = (token: string) => {
   });
 };
 
-
 // ! for getting user post dislike count
 export const useGetUserPostCommentCount = (token: string) => {
   return useQuery({
@@ -112,11 +108,6 @@ export const useGetUserPostCommentCount = (token: string) => {
     enabled: !!token,
   });
 };
-
-
-
-
-
 
 // ! for single  post
 export const useGetSinglePost = (id: string) => {

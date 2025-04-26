@@ -27,13 +27,13 @@ const Home = () => {
 
   const [postsData, setPostData] = useState<TPostsResponse[] | []>([]);
 
-  console.log("from server = ", allPostData?.data);
+  // console.log("from server = ", allPostData?.data);
   // console.log(type);
   // console.log(searchTerm);
-  console.log("sort value = ", sort);
+  // console.log("sort value = ", sort);
   // console.log( 'debounce = ' ,  debounceTerm);
-  console.log(params);
-  console.log("current page = ", currentPage);
+  // console.log(params);
+  // console.log("current page = ", currentPage);
   // console.log(postsData?.length);
 
   // ! for handling see more button , increase pagination state value by 1
