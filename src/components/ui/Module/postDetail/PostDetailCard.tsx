@@ -30,8 +30,6 @@ const PostDetailCard = ({ postData }: IProps) => {
   const { mutateAsync: unfollowUser, isPending: userUnfollowPending } =
     useUnfollowPerson();
 
-  console.log(postData);
-
   // ! for following a user
   const handleFollowUser = async (followerId: string) => {
     const payload = {
@@ -169,10 +167,10 @@ const PostDetailCard = ({ postData }: IProps) => {
         {/* left side section ends  */}
 
         {/* right section starts  */}
-        <div className="topRightSection w-full xsm:w-[96%] xmd:w-[40%]  ">
+        <div className="topRightSection w-full xsm:w-[96%] xmd:w-[40%] rounded-md overflow-auto  ">
           <Image
             src={postData?.postImg}
-            alt="blog Image "
+            alt="blog Image rounded-md overflow-hidden "
             height={700}
             width={700}
           />
@@ -185,7 +183,7 @@ const PostDetailCard = ({ postData }: IProps) => {
 
       {/* blog detail bottom section starts  */}
       <div
-        className="blogDetailBottom  "
+        className="blogDetailBottom postDetail_raw_css pt-8  "
         dangerouslySetInnerHTML={{ __html: postData?.content }}
       ></div>
 

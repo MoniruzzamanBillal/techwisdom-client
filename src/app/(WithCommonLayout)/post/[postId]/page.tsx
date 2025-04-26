@@ -149,10 +149,10 @@ const PostDetail = ({ params: { postId } }: IProps) => {
     content = (
       <div className=" container postDataContainer p-6  rounded-md shadow-md text-white flex flex-col gap-y-3 ">
         <PostDetailCard postData={postDetail?.data} />
-
+  
         <div className=" py-5 print:hidden ">
           <Button
-            className=" text-xs sm:text-sm md:text-base bg-sky-600 hover:bg-prime100 font-semibold text-gray-100 "
+            className=" text-xs sm:text-sm md:text-base bg-sky-600 hover:bg-prime100 font-semibold text-gray-100  "
             onClick={() => window.print()}
           >
             Download this post

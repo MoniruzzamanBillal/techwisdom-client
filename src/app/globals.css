@@ -133,5 +133,12 @@ body {
   text-shadow: 2px 4px 14px #08cdc3a8;
 }
 
-
-
+.postDetail_raw_css ul,
+.postDetail_raw_css li,
+.postDetail_raw_css h1,
+.postDetail_raw_css ol,
+.postDetail_raw_css p {
+  all: revert !important;
+  margin: 0 !important;
+  padding: revert !important;
+}
