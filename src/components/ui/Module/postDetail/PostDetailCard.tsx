@@ -167,7 +167,7 @@ const PostDetailCard = ({ postData }: IProps) => {
         {/* left side section ends  */}
 
         {/* right section starts  */}
-        <div className="topRightSection w-full xsm:w-[96%] xmd:w-[40%] rounded-md overflow-auto  ">
+        <div className="topRightSection w-full xsm:w-[96%] xmd:w-[40%] rounded-md overflow-auto ">
           <Image
             src={postData?.postImg}
             alt="blog Image rounded-md overflow-hidden "
@@ -185,7 +185,9 @@ const PostDetailCard = ({ postData }: IProps) => {
       <div
         className="blogDetailBottom postDetail_raw_css pt-8  "
         dangerouslySetInnerHTML={{ __html: postData?.content }}
-      ></div>
+      >
+        {" "}
+      </div>
 
       {/* blog detail bottom section ends  */}
     </div>

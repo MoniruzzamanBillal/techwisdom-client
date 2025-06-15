@@ -25,6 +25,8 @@ import { Button } from "@/components/ui/button";
 
 import { FacebookShareButton } from "react-share";
 import { FaFacebook } from "react-icons/fa";
+import UpvoteDownVoteComponent from "@/components/ui/Module/postDetail/UpvoteDownVote";
+import { giveUpvotes } from "./../../../../services/PostServices/index";
 
 type IProps = {
   params: {
@@ -50,10 +52,6 @@ const PostDetail = ({ params: { postId } }: IProps) => {
   const { mutateAsync: addComment } = useAddComment();
 
   const [comment, setComment] = useState<string | null>(null);
-
-  // console.log(user);
-  // console.log(postDetail?.data);
-  // console.log(postDetail?.data?.postImg);
 
   // ! check if the user is subscribed
   useEffect(() => {
@@ -149,7 +147,7 @@ const PostDetail = ({ params: { postId } }: IProps) => {
     content = (
       <div className=" container postDataContainer p-6  rounded-md shadow-md text-white flex flex-col gap-y-3 ">
         <PostDetailCard postData={postDetail?.data} />
-  
+
         <div className=" py-5 print:hidden ">
           <Button
             className=" text-xs sm:text-sm md:text-base bg-sky-600 hover:bg-prime100 font-semibold text-gray-100  "
@@ -162,39 +160,12 @@ const PostDetail = ({ params: { postId } }: IProps) => {
         {/* upvote downvote section starts  */}
 
         {user && (
-          <div className="voteContainer print:hidden ">
-            {postDetail?.data?.authorId?._id !== user?._id && (
-              <div className="upvoteDownvoteContainer py-4 mt-2 flex flex-col gap-y-3 border-y border-gray-600  ">
-                {/*  */}
-                <div className="upvoteContainer flex items-center gap-x-2 text-lg xsm:text-xl xmd:text-2xl ">
-                  <p>Give Upvote : </p>
-
-                  {postDetail?.data?.upvotedBy?.includes(user?._id) ? (
-                    <BiSolidLike className=" text-2xl sm:text-3xl text-gray-500 cursor-pointer " />
-                  ) : (
-                    <BiSolidLike
-                      onClick={handleGiveUpvote}
-                      className=" text-2xl sm:text-3xl text-prime100 cursor-pointer "
-                    />
-                  )}
-                </div>
-                {/*  */}
-
-                <div className="downVoteContainer  flex items-center gap-x-2 text-lg xsm:text-xl xmd:text-2xl ">
-                  <p>Give Downvote : </p>
-
-                  {postDetail?.data?.downvotedBy?.includes(user?._id) ? (
-                    <BiSolidDislike className=" text-2xl sm:text-3xl text-gray-500 cursor-pointer " />
-                  ) : (
-                    <BiSolidDislike
-                      onClick={handleGiveDownvote}
-                      className=" text-2xl sm:text-3xl text-prime100 cursor-pointer "
-                    />
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
+          <UpvoteDownVoteComponent
+            user={user}
+            postDetail={postDetail}
+            handleGiveDownvote={handleGiveDownvote}
+            handleGiveUpvote={handleGiveUpvote}
+          />
         )}
 
         {/* upvote downvote section  ends  */}
